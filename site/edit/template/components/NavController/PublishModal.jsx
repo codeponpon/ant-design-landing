@@ -23,7 +23,7 @@ const { TextArea } = Input;
 
 const buildId = 'antd-landing-build';
 
-const nowURL = 'https://ant-design-landing-tau.vercel.app/';
+const nowURL = 'https://gen-landing-page.vercel.app/';
 
 const remarks = {
   'en-US': (
