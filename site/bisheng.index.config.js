@@ -1,6 +1,7 @@
 const commonConfig = require('./bisheng.common.config');
 
 module.exports = { port: 7111,
+  output: './_site',
   root: '/',
   source: {
     docs: './docs',

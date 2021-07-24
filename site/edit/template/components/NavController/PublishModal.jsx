@@ -23,7 +23,7 @@ const { TextArea } = Input;
 
 const buildId = 'antd-landing-build';
 
-const nowURL = 'https://antd-landing.now.sh/';
+const nowURL = 'https://ant-design-landing-tau.vercel.app/';
 
 const remarks = {
   'en-US': (
@@ -124,7 +124,7 @@ class PublishModal extends React.Component {
     const { explain } = this.state;
     const { templateData } = this.props;
     ticker.clear(this.getPublishState);
-    const currentUrl = `${templateData.uid}.antdlanding.now.sh`;
+    const currentUrl = `${templateData.uid}.ant-design-landing-tau.vercel.app`;
     this.getPublishState = ticker.interval(() => {
       fetch(`${nowURL}api/deploy/${id}`, {
         method: 'GET',
@@ -229,7 +229,7 @@ class PublishModal extends React.Component {
     const { isLoad, explain } = this.state;
     const locale = isZhCN(location.pathname) ? 'zh-CN' : 'en-US';
     const page = templateData.data.page || {};
-    const url = `${templateData.uid}.antdlanding.now.sh`;
+    const url = `${templateData.uid}.ant-design-landing-tau.vercel.app`;
     return (
       <Modal
         {...props}
