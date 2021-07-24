@@ -124,7 +124,7 @@ class PublishModal extends React.Component {
     const { explain } = this.state;
     const { templateData } = this.props;
     ticker.clear(this.getPublishState);
-    const currentUrl = `${templateData.uid}.ant-design-landing-tau.vercel.app`;
+    const currentUrl = `${templateData.uid}.vercel.app`;
     this.getPublishState = ticker.interval(() => {
       fetch(`${nowURL}api/deploy/${id}`, {
         method: 'GET',
@@ -229,7 +229,7 @@ class PublishModal extends React.Component {
     const { isLoad, explain } = this.state;
     const locale = isZhCN(location.pathname) ? 'zh-CN' : 'en-US';
     const page = templateData.data.page || {};
-    const url = `${templateData.uid}.ant-design-landing-tau.vercel.app`;
+    const url = `${templateData.uid}.vercel.app`;
     return (
       <Modal
         {...props}
