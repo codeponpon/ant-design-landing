@@ -23,7 +23,8 @@ const { TextArea } = Input;
 
 const buildId = 'antd-landing-build';
 
-const nowURL = 'https://gen-landing-page.vercel.app/';
+const nowURL = 'http://localhost:3000/';
+// const nowURL = 'https://gen-landing-page.vercel.app/';
 
 const remarks = {
   'en-US': (
@@ -135,7 +136,7 @@ class PublishModal extends React.Component {
       }).then((res) => res.json()).then((res) => {
         const { url, lambdas: [item] } = res;
         if (item) {
-          switch (item.readyState) {
+          switch (item.status) {
             case 'READY':
               notification.open({
                 message: this.props.intl.formatMessage({ id: 'app.header.publish-cloud.success' }),
