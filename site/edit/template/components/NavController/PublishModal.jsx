@@ -23,8 +23,8 @@ const { TextArea } = Input;
 
 const buildId = 'antd-landing-build';
 
-const nowURL = 'http://localhost:3000/';
-// const nowURL = 'https://gen-landing-page.vercel.app/';
+// const nowURL = 'http://localhost:3000/';
+const nowURL = 'https://gen-landing-page.vercel.app/';
 
 const remarks = {
   'en-US': (
