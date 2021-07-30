@@ -134,9 +134,10 @@ class PublishModal extends React.Component {
           'Content-Type': 'application/json',
         },
       }).then((res) => res.json()).then((res) => {
-        const { url, lambdas: [item] } = res;
+        const { url, ...item } = res;
+        console.log('RESPONSE', res);
         if (item) {
-          switch (item.status) {
+          switch (item.readyState) {
             case 'READY':
               notification.open({
                 message: this.props.intl.formatMessage({ id: 'app.header.publish-cloud.success' }),
@@ -181,6 +182,7 @@ class PublishModal extends React.Component {
         this.props.changePublishState(false);
         return;
       }
+      console.log('JS ZIP DATA', data);
       fetch(`${nowURL}api/deploy`, {
         method: 'POST',
         mode: 'cors',
@@ -231,6 +233,7 @@ class PublishModal extends React.Component {
     const locale = isZhCN(location.pathname) ? 'zh-CN' : 'en-US';
     const page = templateData.data.page || {};
     const url = `${templateData.uid}.vercel.app`;
+    console.log('PROPS:', this.props);
     return (
       <Modal
         {...props}
