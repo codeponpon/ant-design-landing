@@ -6,6 +6,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 import { enquireScreen } from 'enquire-js';
 import Animate from 'rc-animate';
 
+import thLocale from '../../th-TH';
 import enLocale from '../../en-US';
 import cnLocale from '../../zh-CN';
 import * as utils from '../utils';
@@ -20,12 +21,18 @@ enquireScreen((b) => {
 class Layout extends React.PureComponent {
   static contextTypes = {
     router: PropTypes.object.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
     const { pathname } = props.location;
-    const appLocale = utils.isZhCN(pathname) ? cnLocale : enLocale;
+    let appLocale = enLocale;
+
+    if (utils.isZhCN(pathname)) {
+      appLocale = cnLocale;
+    } else if (utils.isThTH(pathname)) {
+      appLocale = thLocale;
+    }
 
     this.state = {
       appLocale,
@@ -45,7 +52,7 @@ class Layout extends React.PureComponent {
     const { children, ...restProps } = this.props;
     const { pathname } = this.props.location;
     const { appLocale } = this.state;
-    const pathKey = pathname && pathname.split('/')[0];// (pathname.split('/')[1] || pathname.split('/')[0]);
+    const pathKey = pathname && pathname.split('/')[0]; // (pathname.split('/')[1] || pathname.split('/')[0]);
     const childrenToRender = React.cloneElement(children, {
       ...children.props,
       isMobile: this.state.isMobile,
@@ -54,7 +61,11 @@ class Layout extends React.PureComponent {
     return (
       <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
         <ConfigProvider locale={appLocale.locale === 'zh-CN' ? zhCN : null}>
-          <div className={(pathname === '/' || pathname === 'index-cn') ? 'home' : ''}>
+          <div
+            className={
+              pathname === '/' || pathname === 'index-cn' ? 'home' : ''
+            }
+          >
             <div className="header-placeholder" />
             <Header {...restProps} isMobile={this.state.isMobile} />
             <Animate component="div" transitionName="landing-move">

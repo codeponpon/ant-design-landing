@@ -79,22 +79,23 @@
     "lint"
   ],
   "scripts": {
-    "start": "npm run cp-prettier && cross-env NODE_ENV=development concurrently \"npm run start-index\" \"npm run start-edit\" \"npm run start-templates\"",
+    "start": "yarn cp-prettier && cross-env NODE_ENV=development concurrently \"yarn start-index\" \"yarn start-edit\" \"yarn start-templates\"",
+    "start-dev": "yarn cp-prettier && yarn concurrently \"yarn start-index\" \"yarn start-edit\" \"yarn start-templates\"",
     "start-index": "bisheng start -c ./site/bisheng.index.config.js",
     "start-edit": "bisheng start -c ./site/bisheng.edit.config.js",
     "start-templates": "bisheng start -c ./site/bisheng.templates.config.js",
     "build-index": "bisheng build -c ./site/bisheng.index.config.js",
     "build-edit": "bisheng build -c ./site/bisheng.edit.config.js",
     "build-templates": "bisheng build -c ./site/bisheng.templates.config.js",
-    "build": "npm run cp-prettier && cross-env NODE_ENV=production concurrently \"npm run build-index\" \"npm run build-edit\" \"npm run build-templates\"",
-    "site": "npm run build",
+    "build": "yarn cp-prettier && cross-env NODE_ENV=production concurrently \"yarn build-index\" \"yarn build-edit\" \"yarn build-templates\"",
+    "site": "yarn build",
     "cp-prettier": "rm -rf _site && mkdir -p ./_site/edit && cp -r ./prettier/* ./_site/edit ",
-    "deploy": "npm run site && cp CNAME _site && bisheng gh-pages --push-only",
-    "lint": "npm run lint:es && npm run lint:style",
+    "deploy": "yarn site && cp CNAME _site && bisheng gh-pages --push-only",
+    "lint": "yarn lint:es && yarn lint:style",
     "lint:es": "eslint --fix --ext '.js,.jsx' site",
     "lint:style": "stylelint --fix \"site/**/*.less\" --syntax less",
     "lint:demo": "cross-env RUN_ENV=DEMO eslint ./ --ext '.md' -c ./.eslintrc.js",
-    "test": "npm run lint"
+    "test": "yarn lint"
   },
   "sideEffects": [
     "dist/*",

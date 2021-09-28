@@ -46,6 +46,9 @@ export function getMenuItems(moduleData, locale, themeConfig) {
 export function isZhCN(pathname) {
   return /-cn\/?$/.test(pathname);
 }
+export function isThTH(pathname) {
+  return /-th\/?$/.test(pathname);
+}
 
 export function getLocalizedPathname(path, zhCN) {
   const pathname = path.startsWith('/') ? path : `/${path}`;

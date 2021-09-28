@@ -15,11 +15,7 @@ const eslintrc = {
       experimentalObjectRestSpread: true,
     },
   },
-  plugins: [
-    'markdown',
-    'react',
-    'babel',
-  ],
+  plugins: ['markdown', 'react', 'babel'],
   rules: {
     'func-names': 0,
     'arrow-body-style': 0,
@@ -59,7 +55,7 @@ const eslintrc = {
     'import/no-cycle': 0,
     'react/jsx-props-no-spreading': 0,
     'react/state-in-constructor': 0,
-    'react/static-property-placement': 0
+    'react/static-property-placement': 0,
   },
 };
 

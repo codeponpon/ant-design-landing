@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-closing-bracket-location */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-console */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -23,16 +26,17 @@ const { TextArea } = Input;
 
 const buildId = 'antd-landing-build';
 
-// const nowURL = 'http://localhost:3000/';
-const nowURL = 'https://gen-landing-page.vercel.app/';
+const nowURL = 'http://localhost:3000/';
+// const nowURL = 'https://gen-landing-page.vercel.app/';
 
 const remarks = {
   'en-US': (
     <span>
-      Disclaimer: Since we are an open source project, so we will post your edited web page directly to
-      {' '}
-      <a target="_blank" href="https://zeit.co/now">Now</a>
-      {' '}
+      Disclaimer: Since we are an open source project, so we will post your edited web page directly
+      to{' '}
+      <a target="_blank" href="https://zeit.co/now">
+        Now
+      </a>{' '}
       free space, if you have any questions, you can ask questions on
       <a target="_blank" href="https://github.com/ant-design/ant-design-landing/issues">
         Github Issues
@@ -42,16 +46,14 @@ const remarks = {
   ),
   'zh-CN': (
     <span>
-      免责说明: 由于我们是开源项目，所以我们将你编辑的网页直接发布到
-      {' '}
-      <a target="_blank" href="https://zeit.co/now">Now</a>
-      {' '}
-      的免费空间上, 如有任何问题都可以在
-      {' '}
+      免责说明: 由于我们是开源项目，所以我们将你编辑的网页直接发布到{' '}
+      <a target="_blank" href="https://zeit.co/now">
+        Now
+      </a>{' '}
+      的免费空间上, 如有任何问题都可以在{' '}
       <a target="_blank" href="https://github.com/ant-design/ant-design-landing/issues">
         Github Issues
-      </a>
-      {' '}
+      </a>{' '}
       上提问！任何版权或其它责任问题与本网站无关。
     </span>
   ),
@@ -66,7 +68,9 @@ class PublishModal extends React.Component {
   state = {
     isLoad: false,
     explain: [
-      <p key="0"><FormattedMessage id="app.header.publish-cloud.build" /></p>,
+      <p key="0">
+        <FormattedMessage id="app.header.publish-cloud.build" />
+      </p>,
       <p key="1">
         <FormattedMessage id="app.header.publish-cloud.state" />
         FORMAT
@@ -92,21 +96,26 @@ class PublishModal extends React.Component {
     if (!location.port && window.gtag) {
       window.gtag('event', 'save_publish');
     }
-    this.setState({
-      isLoad: true,
-    }, () => {
-      this.props.onSave(null, 'modal', templateData, () => {
-        this.props.changePublishState(true);
-        this.onPublish(templateData, values);
-      });
-    });
-  }
+    this.setState(
+      {
+        isLoad: true,
+      },
+      () => {
+        this.props.onSave(null, 'modal', templateData, () => {
+          this.props.changePublishState(true);
+          this.onPublish(templateData, values);
+        });
+      },
+    );
+  };
 
   publishEnd = () => {
     this.setState({
       isLoad: false,
       explain: [
-        <p key="0"><FormattedMessage id="app.header.publish-cloud.build" /></p>,
+        <p key="0">
+          <FormattedMessage id="app.header.publish-cloud.build" />
+        </p>,
         <p key="1">
           <FormattedMessage id="app.header.publish-cloud.state" />
           FORMAT
@@ -119,7 +128,7 @@ class PublishModal extends React.Component {
     store.set(buildId, currentBuild);
     this.props.changePublishState(false);
     ticker.clear(this.getPublishState);
-  }
+  };
 
   onMonitorPublishState = (id) => {
     const { explain } = this.state;
@@ -133,99 +142,115 @@ class PublishModal extends React.Component {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((res) => res.json()).then((res) => {
-        const { url, ...item } = res;
-        console.log('RESPONSE', res);
-        if (item) {
-          switch (item.readyState) {
-            case 'READY':
-              notification.open({
-                message: this.props.intl.formatMessage({ id: 'app.header.publish-cloud.success' }),
-                description: (
-                  <p>
-                    {this.props.intl.formatMessage({ id: 'app.header.publish-cloud.successRemarks' })}
-                    <a href={`https://${currentUrl}`} target="_blank">
-                      {currentUrl}
-                    </a>
-                  </p>
-                ),
-              });
-              console.log('当前生成的 URL:', url);
-              this.publishEnd();
-              break;
-            case 'ERROR':
-              message.error(this.props.intl.formatMessage({ id: 'pp.header.publish-cloud.error' }));
-              this.publishEnd();
-              break;
-            default:
-              explain.push((
-                <p key={explain.length.toString()}>
-                  <FormattedMessage id="app.header.publish-cloud.state" />
-                  {' '}
-                  {item.readyState}
-                </p>
-              ));
-              this.setState({ explain });
-              break;
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          const { url, ...item } = res;
+          console.log('RESPONSE', res);
+          if (item) {
+            switch (item.readyState) {
+              case 'READY':
+                notification.open({
+                  message: this.props.intl.formatMessage({
+                    id: 'app.header.publish-cloud.success',
+                  }),
+                  description: (
+                    <p>
+                      {this.props.intl.formatMessage({
+                        id: 'app.header.publish-cloud.successRemarks',
+                      })}
+                      <a href={`https://${currentUrl}`} target="_blank">
+                        {currentUrl}
+                      </a>
+                    </p>
+                  ),
+                });
+                console.log('当前生成的 URL:', url);
+                this.publishEnd();
+                break;
+              case 'ERROR':
+                message.error(
+                  this.props.intl.formatMessage({
+                    id: 'pp.header.publish-cloud.error',
+                  }),
+                );
+                this.publishEnd();
+                break;
+              default:
+                explain.push(
+                  <p key={explain.length.toString()}>
+                    <FormattedMessage id="app.header.publish-cloud.state" /> {item.readyState}
+                  </p>,
+                );
+                this.setState({ explain });
+                break;
+            }
           }
-        }
-      });
+        });
     }, 5000);
-  }
+  };
 
   onPublish = (templateData, pageData) => {
-    saveJsZip(templateData, (data) => {
-      if (data === 'error') {
-        this.setState({
-          isLoad: false,
-        });
-        this.props.changePublishState(false);
-        return;
-      }
-      console.log('JS ZIP DATA', data);
-      fetch(`${nowURL}api/deploy`, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: templateData.uid,
-          files: [
-            {
-              file: 'pages/document.ejs',
-              data: `
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-    <title>${pageData.title || ''}</title>
-    <meta name="Description" content="${pageData.description || ''}" />
-    ${pageData.fraction ? `<link rel="icon" href="${pageData.fraction}" type="image/x-icon"></link>` : ''}
-  </head>
-  <body>
-    <div id="<%= context.config.mountElementId %>"></div>
-  </body>
-</html>`,
-            },
-            ...data,
-          ],
-        }),
-      }).then((res) => res.json())
-        .then(({ id, error }) => {
-          if (error) {
-            console.error('Error:', error.message);
-          }
-          // 记录发布状态；
-          const currentBuild = store.get(buildId) || {};
-          currentBuild[templateData.uid] = id;
-          store.set(buildId, currentBuild);
-          this.onMonitorPublishState(id);
+    saveJsZip(
+      templateData,
+      (data) => {
+        if (data === 'error') {
+          this.setState({
+            isLoad: false,
+          });
+          this.props.changePublishState(false);
+          return;
+        }
+        console.log('JS ZIP DATA', data);
+        fetch(`${nowURL}api/deploy`, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: templateData.uid,
+            files: [
+              {
+                file: 'pages/document.ejs',
+                data: ` <!doctype html>
+                      <html>
+                        <head>
+                          <meta charset="utf-8" />
+                          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+                          <title>${pageData.title || ''}</title>
+                          <meta name="Description" content="${pageData.description || ''}" />
+                          ${
+                            pageData.fraction
+                              ? `<link rel="icon" href="${pageData.fraction}" type="image/x-icon"></link>`
+                              : ''
+                          }
+                        </head>
+                        <body>
+                          <div id="<%= context.config.mountElementId %>"></div>
+                        </body>
+                      </html>`,
+              },
+              ...data,
+            ],
+          }),
         })
-        .catch((error) => console.error('Error:', error));
-    }, true);
-  }
+          .then((res) => res.json())
+          .then(({ id, error }) => {
+            if (error) {
+              console.error('Error:', error.message);
+            }
+            // 记录发布状态；
+            const currentBuild = store.get(buildId) || {};
+            currentBuild[templateData.uid] = id;
+            store.set(buildId, currentBuild);
+            this.onMonitorPublishState(id);
+          })
+          .catch((error) => console.error('Error:', error));
+      },
+      true,
+    );
+  };
 
   render() {
     const { templateData, location, onSave, changePublishState, ...props } = this.props;
@@ -235,9 +260,7 @@ class PublishModal extends React.Component {
     const url = `${templateData.uid}.vercel.app`;
     console.log('PROPS:', this.props);
     return (
-      <Modal
-        {...props}
-      >
+      <Modal {...props}>
         {isLoad ? (
           <div
             style={{
@@ -257,18 +280,13 @@ class PublishModal extends React.Component {
               <FormattedMessage id="app.header.publish-cloud.explain" />
             </h3>
             <p>
-              <ProfileOutlined />
-              {' '}
-              {remarks[locale]}
+              <ProfileOutlined /> {remarks[locale]}
             </p>
             <p style={{ margin: '8px 0' }}>
-              <ExperimentOutlined />
-              {' '}
-              <FormattedMessage id="app.header.publish-cloud.remarks" />
+              <ExperimentOutlined /> <FormattedMessage id="app.header.publish-cloud.remarks" />
             </p>
             <p>
-              <ExclamationCircleOutlined />
-              {' '}
+              <ExclamationCircleOutlined />{' '}
               <FormattedMessage id="app.header.publish-cloud.remarks2" />
             </p>
             <h3 style={{ marginTop: 16 }}>
@@ -291,23 +309,27 @@ class PublishModal extends React.Component {
                 <TextArea />
               </Item>
               <Item
-                label={(
+                label={
                   <span>
                     Favicon (ico, png or jpg)
                     <Tooltip title={<FormattedMessage id="app.header.publish-cloud.favicon" />}>
                       <QuestionCircleOutlined style={{ margin: '0 8px' }} />
                     </Tooltip>
                   </span>
-                  )}
+                }
                 name="favicon"
               >
                 <Input />
               </Item>
               <Item style={{ marginTop: 16 }}>
-                <Button disabled={isLoad} type="primary" icon={isLoad ? <LoadingOutlined /> : <CloudUploadOutlined />} htmlType="submit">
+                <Button
+                  disabled={isLoad}
+                  type="primary"
+                  icon={isLoad ? <LoadingOutlined /> : <CloudUploadOutlined />}
+                  htmlType="submit"
+                >
                   <FormattedMessage id="app.header.publish-cloud.button" />
                 </Button>
-
               </Item>
             </Form>
             <p style={{ lineHeight: 2, fontSize: 14, marginTop: 8 }}>
@@ -323,6 +345,4 @@ class PublishModal extends React.Component {
   }
 }
 
-export default r.compose(
-  connect(),
-)(injectIntl(PublishModal));
+export default r.compose(connect())(injectIntl(PublishModal));

@@ -2,7 +2,12 @@
 import xss from 'xss';
 import * as r from 'ramda';
 
-import { DEFAULT_FILE_NAME, DEFAULT_USER_AV_NAME, DEFAULT_USER_NAME, DEFAULT_TEMPLATE_DATA } from './constants';
+import {
+  DEFAULT_FILE_NAME,
+  DEFAULT_USER_AV_NAME,
+  DEFAULT_USER_NAME,
+  DEFAULT_TEMPLATE_DATA,
+} from './constants';
 import AV from './leancloud';
 import * as url from './url';
 import * as ls from './localStorage';
@@ -39,7 +44,9 @@ export const saveFile = (templateData) => {
 };
 
 export const saveData = (templateData) => {
-  const { data: { user } } = templateData;
+  const {
+    data: { user },
+  } = templateData;
   let userData;
   if (user && !user.userId) {
     const password = user.password;
@@ -80,10 +87,7 @@ export function getCurrentTemplateId(hash, data) {
   if (hash) return hash;
   if (data) return undefined;
 
-  return r.compose(
-    r.last,
-    ls.getUserTemplateIds
-  )(DEFAULT_USER_NAME);
+  return r.compose(r.last, ls.getUserTemplateIds)(DEFAULT_USER_NAME);
 }
 
 export function updateHistory(template) {
