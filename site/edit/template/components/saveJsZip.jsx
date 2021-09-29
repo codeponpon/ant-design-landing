@@ -9,7 +9,8 @@ import otherComp from '../../../templates/template/other/otherToString';
 import lessComp from '../../../templates/static/lessToString';
 
 const replaceStr = /\/\*\s+replace-start\s+\*\/([\S\s]*?)\/\*\s+replace-end\s+\*\//g;
-const replaceValueStr = /\/\*\s+replace-start-value\s+=\s+(.*)\s+\*\/([\S\s]*?)\/\*\s+replace-end-value\s+\*\//g;
+const replaceValueStr =
+  /\/\*\s+replace-start-value\s+=\s+(.*)\s+\*\/([\S\s]*?)\/\*\s+replace-end-value\s+\*\//g;
 
 const stateSort = { default: 0, hover: 1, focus: 2, active: 3 };
 
@@ -39,32 +40,35 @@ let publishJSON;
 
 const setScrollScreen = () => {
   const str = `// 实现整屏滚动
-    scrollScreen.init({ location: ['${
-  templateStrObj.TEMPLATE.map((c) => !c.match(/Nav/ig) && c).filter((c) => c).join('\', \'')}'] });`;
-  templateStrObj.OTHER.index = templateStrObj.OTHER.index
-    .replace('&scrollScreen&', str)
-    .replace('&scrollScreen-pragma&', `/* 如果不是 dva 2.0 请使用以下代码
+    scrollScreen.init({ location: ['${templateStrObj.TEMPLATE.map((c) => !c.match(/Nav/gi) && c)
+      .filter((c) => c)
+      .join("', '")}'] });`;
+  templateStrObj.OTHER.index = templateStrObj.OTHER.index.replace('&scrollScreen&', str).replace(
+    '&scrollScreen-pragma&',
+    `/* 如果不是 dva 2.0 请使用以下代码
     ${str}
-    */`);
+    */`,
+  );
 };
 
 const getEditCss = (dataArray) => {
   let cssStr = '';
   let mobileCssStr = '';
   const getCssToString = (css, className) => {
-    return Object.keys(css).sort((a, b) => (
-      stateSort[a] > stateSort[b]
-    )).map((key) => {
-      if (!css[key]) {
-        return null;
-      }
-      switch (key) {
-        case 'default':
-          return `${className}{${css[key]}}`;
-        default:
-          return `${className}:${key}{${css[key]}}`;
-      }
-    }).filter((c) => c)
+    return Object.keys(css)
+      .sort((a, b) => stateSort[a] > stateSort[b])
+      .map((key) => {
+        if (!css[key]) {
+          return null;
+        }
+        switch (key) {
+          case 'default':
+            return `${className}{${css[key]}}`;
+          default:
+            return `${className}:${key}{${css[key]}}`;
+        }
+      })
+      .filter((c) => c)
       .join('');
   };
   let cssString = '';
@@ -87,12 +91,14 @@ const setChildrenToIndex = (other, template) => {
   });
   templateStrObj.TEMPLATE.forEach((key) => {
     const keys = key.split('_');
-    childStr += `<${keys[0]} id="${key}" key="${key}" dataSource={${key
-      .replace('_', '')}DataSource} isMobile={this.state.isMobile}/>,`;
+    childStr += `<${keys[0]} id="${key}" key="${key}" dataSource={${key.replace(
+      '_',
+      '',
+    )}DataSource} isMobile={this.state.isMobile}/>,`;
   });
-  const dataSourceStr = `import {${templateStrObj.TEMPLATE
-    .map((s) => `${s.replace('_', '')}DataSource`)
-    .join(',')}} from './data.source'`;
+  const dataSourceStr = `import {${templateStrObj.TEMPLATE.map(
+    (s) => `${s.replace('_', '')}DataSource`,
+  ).join(',')}} from './data.source'`;
 
   if (templateStrObj.OTHER.point && templateStrObj.TEMPLATE.length) {
     let pointProps = '';
@@ -100,9 +106,11 @@ const setChildrenToIndex = (other, template) => {
       pointProps += `${key}="${other.point[key]}" `;
     });
     // 点转换
-    importStr += 'import Point from \'./Point\';';
+    importStr += "import Point from './Point';";
     childStr += '// 导航和页尾不进入锚点区，如果需要，自行添加;\n';
-    childStr += `<Point key="list" data={${JSON.stringify(templateStrObj.TEMPLATE)}} ${pointProps}/>,`;
+    childStr += `<Point key="list" data={${JSON.stringify(
+      templateStrObj.TEMPLATE,
+    )}} ${pointProps}/>,`;
   }
   childStr = `const children = [${childStr}]`;
   return templateStrObj.OTHER.index
@@ -136,7 +144,7 @@ const jsToZip = (getJSON) => {
     if (getJSON) {
       if (!fileName.match('.md')) {
         publishJSON.push({
-          file: `components/${fileName}`,
+          file: `src/components/${fileName}`,
           data: content,
         });
       }
@@ -152,14 +160,14 @@ const jsToZip = (getJSON) => {
     const lessName = `less/${key.toLocaleLowerCase()}.less`;
     if (getJSON) {
       publishJSON.push({
-        file: `components/${lessName}`,
+        file: `src/components/${lessName}`,
         data: lessComp[key],
       });
     } else {
       zip.file(lessName, lessComp[key]);
     }
   });
-  let propsStr = 'import React from \'react\';\n';
+  let propsStr = "import React from 'react';\n";
   Object.keys(templateStrObj).forEach((key) => {
     const item = templateStrObj[key];
     if (key === 'PROPS') {
@@ -168,12 +176,14 @@ const jsToZip = (getJSON) => {
       });
     } else if (key !== 'TEMPLATE' && key !== 'PROPS') {
       if (typeof item === 'object') {
-        Object.keys(item).forEach((k) => { forEachToFile(k, key, item); });
+        Object.keys(item).forEach((k) => {
+          forEachToFile(k, key, item);
+        });
       } else if (key === 'EDITCSS') {
-        indexLessStr += '@import \'./edit.less\';';
+        indexLessStr += "@import './edit.less';";
         if (getJSON) {
           publishJSON.push({
-            file: 'components/less/edit.less',
+            file: 'src/components/less/edit.less',
             data: templateStrObj[key] || '@edit: .edit;',
           });
         } else {
@@ -184,9 +194,9 @@ const jsToZip = (getJSON) => {
   });
   if (getJSON) {
     [
-      { file: 'components/data.source.js', data: propsStr },
-      { file: 'components/utils.js', data: utils },
-      { file: 'components/less/antMotionStyle.less', data: indexLessStr },
+      { file: 'src/components/data.source.js', data: propsStr },
+      { file: 'src/components/utils.js', data: utils },
+      { file: 'src/components/less/antMotionStyle.less', data: indexLessStr },
     ].forEach((item) => {
       publishJSON.push(item);
     });
@@ -237,8 +247,8 @@ export function saveJsZip(templateData, callBack, getJSON) {
   };
   publishJSON = [
     {
-      file: 'pages/index.js',
-      data: 'import React from \'react\';\nimport Home from \'../components/index\';\n\nexport default () => <Home />;',
+      file: 'src/pages/index.js',
+      data: "import React from 'react';\nimport Home from '../components/index';\n\nexport default () => <Home />;",
     },
   ];
   const { data } = templateData;
@@ -254,21 +264,20 @@ export function saveJsZip(templateData, callBack, getJSON) {
     const keys = key.split('_');
     const { templateStr, less } = webData[keys[0]];
     const dataSource = mergeEditDataToDefault(config[key], webData[keys[0]], true);
-    const props = `export const ${key.replace('_', '')}DataSource =${
-      JSON.stringify(dataSource)
-        .replace(/\\n/g, '')
-        .replace(/href="(.*?)"/g, 'href=\\"$1\\"')
-        .replace(/<br>/g, '<br />')
-        .replace(/"(<.*?>)"/g, (_, s1) => {
-          // https://github.com/ant-design/ant-design-landing/issues/61 去除 span 标签，编辑时可能会出现 span 标签。。
-          /* const tagIsSpanMatch = s1.match(/<span>.*?<\/span>/g);
+    const props = `export const ${key.replace('_', '')}DataSource =${JSON.stringify(dataSource)
+      .replace(/\\n/g, '')
+      .replace(/href="(.*?)"/g, 'href=\\"$1\\"')
+      .replace(/<br>/g, '<br />')
+      .replace(/"(<.*?>)"/g, (_, s1) => {
+        // https://github.com/ant-design/ant-design-landing/issues/61 去除 span 标签，编辑时可能会出现 span 标签。。
+        /* const tagIsSpanMatch = s1.match(/<span>.*?<\/span>/g);
           const startSpanMatch = s1.match(/^<span>.*?<\/span>?/g);
           if (startSpanMatch && tagIsSpanMatch.length === 1) {
             return s1;
           } */
-          return `${s1.replace(/\{/g, '&#123;').replace(/\}/g, '&#125;')}`;
-        })
-        .replace(/\\"/g, '"')}`;
+        return `${s1.replace(/\{/g, '&#123;').replace(/\}/g, '&#125;')}`;
+      })
+      .replace(/\\"/g, '"')}`;
     promiseObject[`PROPS-${key}`] = { value: props };
     /*  formatCode(props).then((value) => {
       templateStrObj.PROPS[key] = value;
@@ -284,19 +293,18 @@ export function saveJsZip(templateData, callBack, getJSON) {
     // formatCode(JSON.stringify(imgToTag(dataSource)).replace(/({|,|\n)"(.*?)":/ig, '$1$2:'), 'json')
     // .replace(/"(<.*?>)"/g, '<span>$1</span>').replace('<br>', '<br />').replace(/"/g, '\'');
     promiseObject[`JS-${keys[0]}`] = {
-      value: newTemplateStr
-        .replace(replaceStr, '')
-        .replace(replaceValueStr, '$1'),
+      value: newTemplateStr.replace(replaceStr, '').replace(replaceValueStr, '$1'),
     };
     /* formatCode(newTemplateStr
       .replace(replaceStr, '')
       .replace(replaceValueStr, '$1')).then((v) => {
       templateStrObj.JS[keys[0]] = v;
     }); */
-    templateStrObj.LESS[keys[0]] = less.replace('@import \'../../../static/custom.less\';\n', '');
+    templateStrObj.LESS[keys[0]] = less.replace("@import '../../../static/custom.less';\n", '');
   });
-  templateStrObj.OTHER.index = templateStrObj.OTHER.index.replace('&scrollAnim&',
-    other.full ? 'import scrollScreen from \'rc-scroll-anim/lib/ScrollScreen\';' : ''
+  templateStrObj.OTHER.index = templateStrObj.OTHER.index.replace(
+    '&scrollAnim&',
+    other.full ? "import scrollScreen from 'rc-scroll-anim/lib/ScrollScreen';" : '',
   );
 
   Object.keys(other).forEach((key) => {

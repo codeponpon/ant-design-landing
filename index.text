@@ -7,6 +7,8 @@ import { enquireScreen } from 'enquire-js';
 &dataSource&
 import './less/antMotionStyle.less';
 
+React.useLayoutEffect = React.useEffect;
+
 let isMobile;
 enquireScreen((b) => {
   isMobile = b;

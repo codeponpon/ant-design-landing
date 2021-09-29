@@ -61,11 +61,7 @@ class Layout extends React.PureComponent {
     return (
       <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
         <ConfigProvider locale={appLocale.locale === 'zh-CN' ? zhCN : null}>
-          <div
-            className={
-              pathname === '/' || pathname === 'index-cn' ? 'home' : ''
-            }
-          >
+          <div className={pathname === '/' || pathname === 'index-cn' ? 'home' : ''}>
             <div className="header-placeholder" />
             <Header {...restProps} isMobile={this.state.isMobile} />
             <Animate component="div" transitionName="landing-move">

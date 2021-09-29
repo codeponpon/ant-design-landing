@@ -201,7 +201,7 @@ class PublishModal extends React.Component {
           this.props.changePublishState(false);
           return;
         }
-        console.log('JS ZIP DATA', data);
+        console.log('===== JS ZIP DATA =======', data);
         fetch(`${nowURL}api/deploy`, {
           method: 'POST',
           mode: 'cors',
@@ -212,7 +212,7 @@ class PublishModal extends React.Component {
             name: templateData.uid,
             files: [
               {
-                file: 'pages/document.ejs',
+                file: 'src/pages/document.ejs',
                 data: ` <!doctype html>
                       <html>
                         <head>

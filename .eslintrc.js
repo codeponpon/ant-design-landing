@@ -56,6 +56,9 @@ const eslintrc = {
     'react/jsx-props-no-spreading': 0,
     'react/state-in-constructor': 0,
     'react/static-property-placement': 0,
+    'operator-linebreak': 0,
+    'react/jsx-one-expression-per-line': 0,
+    indent: 0,
   },
 };
 

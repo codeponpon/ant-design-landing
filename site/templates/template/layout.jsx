@@ -6,10 +6,7 @@ import { mobileTitle } from 'rc-editor-list/lib/utils';
 import { polyfill } from 'react-lifecycles-compat';
 
 import webData from './element/template.config';
-import {
-  getEditDomData,
-  setDataIdToDataSource,
-} from './utils';
+import { getEditDomData, setDataIdToDataSource } from './utils';
 import { mergeEditDataToDefault, mdId, getChildRect } from '../../utils';
 import { mapStateToProps } from '../../shared/utils';
 import * as actions from '../../shared/redux/actions';
@@ -54,7 +51,7 @@ class Layout extends React.Component {
     this.state = {
       templateData: props.templateData,
       isMobile,
-      $self: this,// eslint-disable-line
+      $self: this, // eslint-disable-line
     };
   }
 
@@ -66,8 +63,10 @@ class Layout extends React.Component {
     scrollScreen.unMount();
     if (this.scrollScreen) {
       const { templateData } = this.state;
-      const { data: { template } } = templateData || { data: { template: [] } };
-      scrollScreen.init({ location: template.map((c) => !c.match(/Nav/ig) && c).filter((c) => c) });
+      const {
+        data: { template },
+      } = templateData || { data: { template: [] } };
+      scrollScreen.init({ location: template.map((c) => !c.match(/Nav/gi) && c).filter((c) => c) });
     }
     if (!this.isEdit && this.props !== prevProps) {
       this.setScrollToWindow();
@@ -88,16 +87,24 @@ class Layout extends React.Component {
   setData = () => {
     const editData = getEditDomData(this.dom.children);
     // 增加弹框之类的编辑，，导航的下拉菜单；
-    const bodyChild = Array.prototype.slice.call(document.body.childNodes)
-      .filter((item) => item.tagName && item.tagName.toLocaleLowerCase() === 'div' && item.getAttribute('id') !== 'react-content');
-    const currentPopArray = bodyChild.map((item) => getChildRect(item)).filter((c) => c).flat(Infinity);
+    const bodyChild = Array.prototype.slice.call(document.body.childNodes).filter((item) => {
+      return (
+        item.tagName &&
+        item.tagName.toLocaleLowerCase() === 'div' &&
+        item.getAttribute('id') !== 'react-content'
+      );
+    });
+    const currentPopArray = bodyChild
+      .map((item) => getChildRect(item))
+      .filter((c) => c)
+      .flat(Infinity);
     editData.currentPopover = currentPopArray;
     // Uncaught DOMException: Failed to execute 'postMessage' on 'Window': HTMLDivElement object could not be cloned.
     // window.parent.postMessage(editData, '*');
     if (window.parent.receiveDomData) {
       window.parent.receiveDomData(editData, window, mdId);
     }
-  }
+  };
 
   messageHandle = (e) => {
     // FIXME: need much better assert condition
@@ -111,37 +118,43 @@ class Layout extends React.Component {
         id: e.data.uid,
         attributes: e.data.data,
       });
-      this.setState({
-        templateData: e.data,
-      }, this.setScrollToWindow);
+      this.setState(
+        {
+          templateData: e.data,
+        },
+        this.setScrollToWindow,
+      );
     }
-  }
+  };
 
   setScrollToWindow = () => {
     // 拖动模板后，滚动回位；
     if (this.scrollTop) {
       window.scrollTo(0, this.scrollTop);
     }
-  }
+  };
 
   createStyle = (id = '') => {
     const style = document.createElement('style');
     document.body.appendChild(style);
     style.id = id;
     return style;
-  }
+  };
 
   setStyleData = (style) => {
-    const getCssToString = (css, className) => Object.keys(css).sort((a, b) => (
-      stateSort[a] - stateSort[b]
-    )).map((key) => {
-      switch (key) {
-        case 'default':
-          return css[key].trim() && `${className} {${css[key]}}`;
-        default:
-          return css[key].trim() && `${className}:${key} {${css[key]}}`;
-      }
-    }).filter((c) => c);
+    const getCssToString = (css, className) => {
+      return Object.keys(css)
+        .sort((a, b) => stateSort[a] - stateSort[b])
+        .map((key) => {
+          switch (key) {
+            case 'default':
+              return css[key].trim() && `${className} {${css[key]}}`;
+            default:
+              return css[key].trim() && `${className}:${key} {${css[key]}}`;
+          }
+        })
+        .filter((c) => c);
+    };
     let cssStyle = '';
     let cssMobileCss = '';
     style.forEach((item) => {
@@ -161,9 +174,10 @@ class Layout extends React.Component {
       }
     });
     // 版本兼容，两个 css render 都带上；
-    this.styleTag.innerHTML = `${cssStyle || ''}${cssMobileCss
-      ? `${mobileTitle}${cssMobileCss}}` : ''}`;
-  }
+    this.styleTag.innerHTML = `${cssStyle || ''}${
+      cssMobileCss ? `${mobileTitle}${cssMobileCss}}` : ''
+    }`;
+  };
 
   getDataToChildren = () => {
     const { templateData } = this.state;
@@ -178,7 +192,8 @@ class Layout extends React.Component {
       const componentName = keys[0];
       const componentData = webData[componentName];
       const d = configData[key] || {};
-      const dataSource = this.isEdit ? setDataIdToDataSource(mergeEditDataToDefault(d, componentData, true), key)
+      const dataSource = this.isEdit
+        ? setDataIdToDataSource(mergeEditDataToDefault(d, componentData, true), key)
         : mergeEditDataToDefault(d, componentData, true);
       return React.createElement(componentData.component, {
         key,
@@ -192,13 +207,7 @@ class Layout extends React.Component {
     Object.keys(otherData).forEach((key) => {
       switch (key) {
         case 'point': {
-          children.push((
-            <Point
-              key="point"
-              data={template}
-              {...otherData[key]}
-            />
-          ));
+          children.push(<Point key="point" data={template} {...otherData[key]} />);
           break;
         }
         case 'full':
@@ -211,7 +220,7 @@ class Layout extends React.Component {
       }
     });
     return children;
-  }
+  };
 
   getTemplatesToChildren = () => {
     const { templateData } = this.state;
@@ -229,8 +238,7 @@ class Layout extends React.Component {
             }}
           >
             {' '}
-            Loading data...
-            {' '}
+            Loading data...{' '}
           </div>
         );
       case 'error':
@@ -256,16 +264,16 @@ class Layout extends React.Component {
   render() {
     const children = this.getTemplatesToChildren();
     return [
-      (
-        <div
-          id="templates-wrapper"
-          className="templates-wrapper"
-          ref={(c) => { this.dom = c; }}
-          key="templates"
-        >
-          {children}
-        </div>
-      ),
+      <div
+        id="templates-wrapper"
+        className="templates-wrapper"
+        ref={(c) => {
+          this.dom = c;
+        }}
+        key="templates"
+      >
+        {children}
+      </div>,
       !this.isEdit && <BottomBar key="bar" />,
     ];
   }

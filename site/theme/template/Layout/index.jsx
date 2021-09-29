@@ -16,5 +16,5 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Index(props) {
-  return (<Layout {...props} />);
+  return <Layout {...props} />;
 }
