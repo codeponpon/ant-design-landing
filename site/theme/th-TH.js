@@ -1,10 +1,11 @@
 module.exports = {
-  locale: 'en-US',
+  locale: 'th-TH',
   messages: {
     'app.header.menu.home': 'หน้าหลัก',
     'app.header.menu.language': 'Doc',
     'app.header.menu.edit': 'Editor',
-    'app.home.introduce': 'Ant Design Landing platform has a variety of  templates, download template package, you can use it quickly, you can also use the  editor to quickly build a dedicated page for you.',
+    'app.home.introduce':
+      'Ant Design Landing platform has a variety of  templates, download template package, you can use it quickly, you can also use the  editor to quickly build a dedicated page for you.',
     'app.home.select-template': 'Templates',
     'app.home.enter-editor': 'Editor',
     'app.home.module': 'Modules',
@@ -16,7 +17,8 @@ module.exports = {
     'app.home.preview': 'Preview',
     'app.home.edit': 'Edit',
     'app.home.download': 'download',
-    'app.home.edit-slogen': 'All templates and modules are based on Ant Design specifications. You can download templates and source files directly, or use editor to quickly build a page belonging to you.',
+    'app.home.edit-slogen':
+      'All templates and modules are based on Ant Design specifications. You can download templates and source files directly, or use editor to quickly build a page belonging to you.',
     'app.home.slogan': 'Ant Design Landing Templates and Specifications',
     'app.content.edit-page': 'Edit this page on GitHub!',
     'app.footer.repo': 'GitHub',
@@ -46,8 +48,9 @@ module.exports = {
     'app.footer.fengdie.slogan': 'Mobile web app builder',
     'app.footer.seeconf': 'Seeking Experience & Engineering Conference',
     'app.footer.xcloud': 'Ant Experience Cloud',
-    'app.footer.lang': '中文',
+    'app.footer.lang': 'ภาษาไทย',
     'app.layout.notification.title': 'Need Github star',
-    'app.layout.notification.content': 'We need your support, please click the button to help us increase.',
+    'app.layout.notification.content':
+      'We need your support, please click the button to help us increase.',
   },
 };

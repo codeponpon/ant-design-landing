@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IntlProvider } from 'react-intl';
 import { ConfigProvider } from 'antd';
-import zhCN from 'antd/es/locale/zh_CN';
+import thTH from 'antd/es/locale/th_TH';
 import { enquireScreen } from 'enquire-js';
 import Animate from 'rc-animate';
 
 import thLocale from '../../th-TH';
 import enLocale from '../../en-US';
-import cnLocale from '../../zh-CN';
 import * as utils from '../utils';
 
 import Header from './Header';
@@ -28,9 +27,7 @@ class Layout extends React.PureComponent {
     const { pathname } = props.location;
     let appLocale = enLocale;
 
-    if (utils.isZhCN(pathname)) {
-      appLocale = cnLocale;
-    } else if (utils.isThTH(pathname)) {
+    if (utils.isThTH(pathname)) {
       appLocale = thLocale;
     }
 
@@ -60,8 +57,8 @@ class Layout extends React.PureComponent {
     });
     return (
       <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
-        <ConfigProvider locale={appLocale.locale === 'zh-CN' ? zhCN : null}>
-          <div className={pathname === '/' || pathname === 'index-cn' ? 'home' : ''}>
+        <ConfigProvider locale={appLocale.locale === 'th-TH' ? thTH : null}>
+          <div className={pathname === '/' || pathname === 'index-th' ? 'home' : ''}>
             <div className="header-placeholder" />
             <Header {...restProps} isMobile={this.state.isMobile} />
             <Animate component="div" transitionName="landing-move">

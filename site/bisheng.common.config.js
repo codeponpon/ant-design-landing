@@ -7,8 +7,13 @@ const antdImport = ['import', { libraryName: 'antd', style: true }];
 
 function alertTheme(rules) {
   rules.forEach((rule) => {
-    if (Array.isArray(rule.use) && (rule.use.indexOf('less-loader') >= 0
-      || rule.use.some((c) => c.loader && (c.loader.indexOf('less-loader') >= 0 || c.loader === 'less-loader')))) {
+    if (
+      Array.isArray(rule.use) &&
+      (rule.use.indexOf('less-loader') >= 0 ||
+        rule.use.some(
+          (c) => c.loader && (c.loader.indexOf('less-loader') >= 0 || c.loader === 'less-loader'),
+        ))
+    ) {
       rule.use = rule.use.map((item) => {
         if (item.loader && item.loader.indexOf('less-loader') >= 0) {
           item.options = {
@@ -63,13 +68,13 @@ function alertBabelConfig(rules) {
 module.exports = {
   filePathMapper(filePath) {
     if (filePath === '/index.html') {
-      return ['/index.html', '/index-cn.html'];
+      return ['/index.html', '/index-th.html'];
     }
     if (filePath.endsWith('/index.html')) {
-      return [filePath, filePath.replace(/\/index\.html$/, '-cn/index.html')];
+      return [filePath, filePath.replace(/\/index\.html$/, '-th/index.html')];
     }
-    if (filePath !== '/404.html' && filePath !== '/index-cn.html') {
-      return [filePath, filePath.replace(/\.html$/, '-cn.html')];
+    if (filePath !== '/404.html' && filePath !== '/index-th.html') {
+      return [filePath, filePath.replace(/\.html$/, '-th.html')];
     }
     return filePath;
   },

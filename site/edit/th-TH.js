@@ -1,5 +1,5 @@
 module.exports = {
-  locale: 'en-US',
+  locale: 'th-TH',
   messages: {
     'app.common.ok': 'OK',
     'app.common.cancel': 'Cancel',
@@ -58,7 +58,7 @@ module.exports = {
     'app.side.umi-example': 'Umi example',
     'app.side.video-help': 'Video help',
     'app.side.help': 'Help',
-    'app.side.lang': 'ภาษาไทย',
+    'app.side.lang': 'English',
     'app.other.switch': 'Switch',
     'app.other.point': 'Side button point',
     'app.other.full': 'Full screen scroll',

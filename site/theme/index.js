@@ -41,7 +41,7 @@ module.exports = {
     indexRoute: { component: homeTmpl },
     childRoutes: [
       {
-        path: 'index-cn',
+        path: 'index-th',
         component: homeTmpl,
       },
       {

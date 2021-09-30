@@ -4,15 +4,9 @@ export default function NotFound(props) {
   return (
     <div id="page-404" className={props.className}>
       <section>
-        <h1>
-          404
-        </h1>
+        <h1>404</h1>
         <p>
-          你要找的页面不存在
-          {' '}
-          <a href="/">
-            返回首页
-          </a>
+          หน้าที่กำลังมองหาไม่มี <a href="/">กลับหน้าแรก</a>
         </p>
       </section>
       <style

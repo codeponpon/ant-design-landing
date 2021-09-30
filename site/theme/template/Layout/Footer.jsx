@@ -6,7 +6,7 @@ import * as utils from '../utils';
 class Footer extends React.PureComponent {
   render() {
     const { pathname } = this.props.location;
-    const isZhCN = utils.isZhCN(pathname);
+    const isThTH = utils.isThTH(pathname);
     return (
       <footer id="footer" className="dark">
         <div className="footer-wrap">
@@ -33,7 +33,9 @@ class Footer extends React.PureComponent {
             </Col>
             <Col md={6} sm={24} xs={24}>
               <div className="footer-center">
-                <h2><FormattedMessage id="app.footer.links" /></h2>
+                <h2>
+                  <FormattedMessage id="app.footer.links" />
+                </h2>
                 <div>
                   <a target="_blank " href="http://ant.design">
                     Ant Design
@@ -48,12 +50,16 @@ class Footer extends React.PureComponent {
                   <a href="http://mobile.ant.design">Ant Design Mobile</a>
                 </div>
                 <div>
-                  <a target="_blank" rel="noopener" href="http://motion.ant.design">Ant Motion</a>
+                  <a target="_blank" rel="noopener" href="http://motion.ant.design">
+                    Ant Motion
+                  </a>
                   <span> - </span>
                   <FormattedMessage id="app.footer.motion" />
                 </div>
                 <div>
-                  <a target="_blank" rel="noopener noreferrer" href="http://kitchen.alipay.com">Kitchen</a>
+                  <a target="_blank" rel="noopener noreferrer" href="http://kitchen.alipay.com">
+                    Kitchen
+                  </a>
                   <span> - </span>
                   <FormattedMessage id="app.footer.kitchen" />
                 </div>
@@ -63,27 +69,37 @@ class Footer extends React.PureComponent {
                   <FormattedMessage id="app.footer.scaffolds" />
                 </div>
                 <div>
-                  <a target="_blank" rel="noopener" href="http://library.ant.design/">Axure Library</a>
+                  <a target="_blank" rel="noopener" href="http://library.ant.design/">
+                    Axure Library
+                  </a>
                   <span> - </span>
                   <FormattedMessage id="app.footer.antd-library" />
                 </div>
                 <div>
-                  <a target="_blank" rel="noopener" href="http://ux.ant.design">Ant UX</a>
+                  <a target="_blank" rel="noopener" href="http://ux.ant.design">
+                    Ant UX
+                  </a>
                   <span> - </span>
                   <FormattedMessage id="app.footer.antux" />
                 </div>
                 <div>
-                  <a target="_blank" rel="noopener noreferrer" href="http://umijs.org/">Umi</a>
+                  <a target="_blank" rel="noopener noreferrer" href="http://umijs.org/">
+                    Umi
+                  </a>
                   <span> - </span>
                   <FormattedMessage id="app.footer.umi" />
                 </div>
                 <div>
-                  <a target="_blank" rel="noopener noreferrer" href="http://d.umijs.org/">Dumi</a>
+                  <a target="_blank" rel="noopener noreferrer" href="http://d.umijs.org/">
+                    Dumi
+                  </a>
                   <span> - </span>
                   <FormattedMessage id="app.footer.dumi" />
                 </div>
                 <div>
-                  <a target="_blank" rel="noopener noreferrer" href="https://github.com/dvajs/dva">dva</a>
+                  <a target="_blank" rel="noopener noreferrer" href="https://github.com/dvajs/dva">
+                    dva
+                  </a>
                   <span> - </span>
                   <FormattedMessage id="app.footer.dva" />
                 </div>
@@ -91,9 +107,15 @@ class Footer extends React.PureComponent {
             </Col>
             <Col md={6} sm={24} xs={24}>
               <div className="footer-center">
-                <h2><FormattedMessage id="app.footer.community" /></h2>
+                <h2>
+                  <FormattedMessage id="app.footer.community" />
+                </h2>
                 <div>
-                  <a target="_blank" rel="noopener" href="https://github.com/ant-design/ant-design-landing/issues">
+                  <a
+                    target="_blank"
+                    rel="noopener"
+                    href="https://github.com/ant-design/ant-design-landing/issues"
+                  >
                     <FormattedMessage id="app.footer.issues" />
                   </a>
                 </div>
@@ -101,7 +123,7 @@ class Footer extends React.PureComponent {
                   <a
                     target="_blank"
                     rel="noopener"
-                    href={`http://ant.design/docs/spec/work-with-us${isZhCN ? '-cn' : ''}`}
+                    href={`http://ant.design/docs/spec/work-with-us${isThTH ? '-th' : ''}`}
                   >
                     <FormattedMessage id="app.footer.work-with-us" />
                   </a>
@@ -156,11 +178,7 @@ class Footer extends React.PureComponent {
           </Row>
         </div>
         <div className="bottom-bar">
-          Made with
-          {' '}
-          <span className="heart">❤</span>
-          {' '}
-          by
+          Made with <span className="heart">❤</span> by
           <a target="_blank" rel="noopener noreferrer" href="https://yuque.com/afx/blog">
             AFX
           </a>

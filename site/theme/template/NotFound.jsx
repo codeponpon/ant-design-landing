@@ -8,8 +8,8 @@ export default function NotFound() {
       <section>
         <h1>404</h1>
         <p>
-          你要找的页面不存在
-          <Link to="dsf">返回首页</Link>
+          หน้าที่กำลังมองหาไม่มี
+          <Link to="/">กลับหน้าแรก</Link>
         </p>
       </section>
       <style

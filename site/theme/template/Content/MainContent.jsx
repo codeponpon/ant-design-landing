@@ -18,22 +18,27 @@ const { easing } = TweenOne;
 
 function getActiveMenuItem(props) {
   const { children } = props.params;
-  return (children && children.replace('-cn', ''))
-    || props.location.pathname.replace(/(^\/|-cn$)/g, '');
+  return (
+    (children && children.replace('-th', '')) || props.location.pathname.replace(/(^\/|-th$)/g, '')
+  );
 }
 
 function getModuleData(props) {
   const pathname = props.location.pathname;
 
-  const moduleName = pathname.split('/').filter((item) => item).slice(0, -1).join('/');
+  const moduleName = pathname
+    .split('/')
+    .filter((item) => item)
+    .slice(0, -1)
+    .join('/');
 
   const moduleData = props.picked[moduleName];
-  const excludedSuffix = utils.isZhCN(props.location.pathname) ? 'en-US.md' : 'zh-CN.md';
+  const excludedSuffix = utils.isZhCN(props.location.pathname) ? 'en-US.md' : 'th-TH.md';
   return moduleData.filter(({ meta }) => !meta.filename.endsWith(excludedSuffix));
 }
 
 function fileNameToPath(filename) {
-  const snippets = filename.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '').split('/');
+  const snippets = filename.replace(/(\/index)?((\.th-TH)|(\.en-US))?\.md$/i, '').split('/');
   return snippets[snippets.length - 1];
 }
 
@@ -48,14 +53,12 @@ function getCurrentModule(pathname) {
 function getSideBarOpenKeys(props, prevModule) {
   const pathname = props.location.pathname;
   const currentModule = getCurrentModule(pathname);
-  const locale = utils.isZhCN(pathname) ? 'zh-CN' : 'en-US';
+  const locale = utils.isThTH(pathname) ? 'th-TH' : 'en-US';
   if (prevModule !== currentModule) {
     const moduleData = getModuleData(props);
-    const shouldOpenKeys = utils.getMenuItems(
-      moduleData,
-      locale,
-      props.themeConfig
-    ).map((m) => m.title[locale] || m.title);
+    const shouldOpenKeys = utils
+      .getMenuItems(moduleData, locale, props.themeConfig)
+      .map((m) => m.title[locale] || m.title);
     return shouldOpenKeys;
   }
 }
@@ -122,42 +125,42 @@ class MainContent extends React.PureComponent {
     this.setState({
       openKeys,
     });
-  }
+  };
 
   generateMenuItem(isTop, item) {
     const { locale } = this.props.intl;
     const key = fileNameToPath(item.filename);
     const text = [
-      <span key="english">
-        {item.title[locale] || item.title}
-      </span>,
+      <span key="english">{item.title[locale] || item.title}</span>,
       <span className="chinese" key="chinese">
         {item.subtitle}
       </span>,
     ];
     const disabled = item.disabled;
-    const url = item.filename.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '').replace('scaffold/src/', '');
+    const url = item.filename
+      .replace(/(\/index)?((\.th-TH)|(\.en-US))?\.md$/i, '')
+      .replace('scaffold/src/', '');
     const child = !item.link ? (
       <Link
-        to={utils.getLocalizedPathname(/^components/.test(url) ? `${url}/` : url, locale === 'zh-CN')}
+        to={utils.getLocalizedPathname(
+          /^components/.test(url) ? `${url}/` : url,
+          locale === 'th-TH',
+        )}
         disabled={disabled}
       >
         {text}
       </Link>
-    )
-      : (
-        <a
-          href={item.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          disabled={disabled}
-          className="menu-item-link-outside"
-        >
-          {text}
-          {' '}
-          <ExportOutlined />
-        </a>
-      );
+    ) : (
+      <a
+        href={item.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        disabled={disabled}
+        className="menu-item-link-outside"
+      >
+        {text} <ExportOutlined />
+      </a>
+    );
     return (
       <Menu.Item key={key} disabled={disabled}>
         {child}
@@ -166,30 +169,25 @@ class MainContent extends React.PureComponent {
   }
 
   getMenuItems() {
-    const { themeConfig, intl: { locale } } = this.props;
-    const moduleData = getModuleData(this.props);
-    const menuItems = utils.getMenuItems(
-      moduleData,
-      locale,
+    const {
       themeConfig,
-    );
+      intl: { locale },
+    } = this.props;
+    const moduleData = getModuleData(this.props);
+    const menuItems = utils.getMenuItems(moduleData, locale, themeConfig);
     return menuItems.map((menuItem) => {
       if (menuItem.children) {
         return (
-          <SubMenu title={(
-            <h4>
-              {menuItem.title}
-            </h4>
-          )}
-            key={menuItem.title}
-          >
+          <SubMenu title={<h4>{menuItem.title}</h4>} key={menuItem.title}>
             {menuItem.children.map((child) => {
               if (child.type === 'type') {
                 return (
                   <Menu.ItemGroup title={child.title} key={child.title}>
-                    {child.children.sort((a, b) => {
-                      return a.title.charCodeAt(0) - b.title.charCodeAt(0);
-                    }).map((leaf) => this.generateMenuItem(false, leaf))}
+                    {child.children
+                      .sort((a, b) => {
+                        return a.title.charCodeAt(0) - b.title.charCodeAt(0);
+                      })
+                      .map((leaf) => this.generateMenuItem(false, leaf))}
                   </Menu.ItemGroup>
                 );
               }
@@ -252,21 +250,15 @@ class MainContent extends React.PureComponent {
     return (
       <div className="main-wrapper">
         <Row className="">
-          {
-            props.isMobile ? (
-              <MobileMenu
-                key="mobile-menu"
-                wrapperClassName="drawer-wrapper"
-              >
-                {menuChild}
-              </MobileMenu>
-            )
-              : (
-                <Col xxl={4} xl={5} lg={6} md={6} sm={24} xs={24} className="main-menu">
-                  {menuChild}
-                </Col>
-              )
-          }
+          {props.isMobile ? (
+            <MobileMenu key="mobile-menu" wrapperClassName="drawer-wrapper">
+              {menuChild}
+            </MobileMenu>
+          ) : (
+            <Col xxl={4} xl={5} lg={6} md={6} sm={24} xs={24} className="main-menu">
+              {menuChild}
+            </Col>
+          )}
           <Col xxl={20} xl={19} lg={18} md={18} sm={24} xs={24} className="main-container">
             <Animate component="div" transitionName="landing-move" className="main-animate-wraper">
               <Article {...props} content={localizedPageData} key={contentKey} />
@@ -284,28 +276,24 @@ class MainContent extends React.PureComponent {
             xs={24}
           >
             <section className="prev-next-nav">
-              {
-                prev
-                  ? React.cloneElement(prev.props.children, {
+              {prev
+                ? React.cloneElement(prev.props.children, {
                     className: 'prev-page',
                     children: [
                       <LeftOutlined className="footer-nav-icon-before" key="left" />,
                       ...prev.props.children.props.children,
                     ],
                   })
-                  : null
-              }
-              {
-                next
-                  ? React.cloneElement(next.props.children, {
+                : null}
+              {next
+                ? React.cloneElement(next.props.children, {
                     className: 'next-page',
                     children: [
                       ...next.props.children.props.children,
                       <RightOutlined className="footer-nav-icon-after" key="right" />,
                     ],
                   })
-                  : null
-              }
+                : null}
             </section>
           </Col>
         </Row>

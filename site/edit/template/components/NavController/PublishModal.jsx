@@ -19,7 +19,7 @@ import ticker from 'rc-tween-one/lib/ticker';
 import store from 'store';
 
 import { saveJsZip } from '../saveJsZip';
-import { isZhCN } from '../../../../theme/template/utils';
+import { isThTH } from '../../../../theme/template/utils';
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -31,6 +31,20 @@ const nowURL = 'http://localhost:3000/';
 
 const remarks = {
   'en-US': (
+    <span>
+      Disclaimer: Since we are an open source project, so we will post your edited web page directly
+      to{' '}
+      <a target="_blank" href="https://zeit.co/now">
+        Now
+      </a>{' '}
+      free space, if you have any questions, you can ask questions on
+      <a target="_blank" href="https://github.com/ant-design/ant-design-landing/issues">
+        Github Issues
+      </a>
+      , Any copyright or other liability issues are not related to this website.
+    </span>
+  ),
+  'th-TH': (
     <span>
       Disclaimer: Since we are an open source project, so we will post your edited web page directly
       to{' '}
@@ -255,7 +269,7 @@ class PublishModal extends React.Component {
   render() {
     const { templateData, location, onSave, changePublishState, ...props } = this.props;
     const { isLoad, explain } = this.state;
-    const locale = isZhCN(location.pathname) ? 'zh-CN' : 'en-US';
+    const locale = isThTH(location.pathname) ? 'th-TH' : 'en-US';
     const page = templateData.data.page || {};
     const url = `${templateData.uid}.vercel.app`;
     console.log('PROPS:', this.props);

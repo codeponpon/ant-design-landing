@@ -1,11 +1,10 @@
 module.exports = {
-  routes:
-  {
+  routes: {
     path: '/',
     component: './template/index',
     childRoutes: [
       {
-        path: 'index-cn',
+        path: 'index-th',
         component: './template/index',
       },
     ],

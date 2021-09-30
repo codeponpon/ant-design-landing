@@ -36,12 +36,14 @@ export function getMenuItems(moduleData, locale, themeConfig) {
       }
     }
   });
-  return menuItems.map((i) => {
-    if (i.children) {
-      i.children = i.children.sort(sortFn);
-    }
-    return i;
-  }).sort(sortFn);
+  return menuItems
+    .map((i) => {
+      if (i.children) {
+        i.children = i.children.sort(sortFn);
+      }
+      return i;
+    })
+    .sort(sortFn);
 }
 export function isZhCN(pathname) {
   return /-cn\/?$/.test(pathname);
@@ -50,29 +52,34 @@ export function isThTH(pathname) {
   return /-th\/?$/.test(pathname);
 }
 
-export function getLocalizedPathname(path, zhCN) {
+export function getLocalizedPathname(path, thTH) {
   const pathname = path.startsWith('/') ? path : `/${path}`;
-  if (!zhCN) { // to enUS
-    if (/^\/?index-cn/.test(pathname)) {
+  if (!thTH) {
+    // to enUS
+    if (/^\/?index-th/.test(pathname)) {
       return '/';
     }
-    return /\/?index-cn/.test(pathname) ? pathname.replace('/index-cn', '') : pathname.replace('-cn', '');
-  } if (pathname === '/') {
-    return '/index-cn';
-  } if (pathname.endsWith('/')) {
-    return pathname.replace(/\/$/, '-cn/');
+    return /\/?index-th/.test(pathname)
+      ? pathname.replace('/index-th', '')
+      : pathname.replace('-th', '');
   }
-  return `${pathname}-cn`;
+  if (pathname === '/') {
+    return '/index-th';
+  }
+  if (pathname.endsWith('/')) {
+    return pathname.replace(/\/$/, '-th/');
+  }
+  return `${pathname}-th`;
 }
 
 export function ping(callback) {
   // eslint-disable-next-line
   const url =
-    'https://private-a'
-    + 'lipay'
-    + 'objects.alip'
-    + 'ay.com/alip'
-    + 'ay-rmsdeploy-image/rmsportal/RKuAiriJqrUhyqW.png';
+    'https://private-a' +
+    'lipay' +
+    'objects.alip' +
+    'ay.com/alip' +
+    'ay-rmsdeploy-image/rmsportal/RKuAiriJqrUhyqW.png';
   const img = new Image();
   let done;
   const finish = (status) => {

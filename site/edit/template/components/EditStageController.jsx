@@ -7,7 +7,15 @@ import { FormattedMessage } from 'react-intl';
 import dragula from 'dragula';
 
 import { getCurrentDom } from '../utils';
-import { isImg, mergeEditDataToDefault, deepCopy, getDataSourceValue, mdId, objectEqual, getChildRect } from '../../../utils';
+import {
+  isImg,
+  mergeEditDataToDefault,
+  deepCopy,
+  getDataSourceValue,
+  mdId,
+  objectEqual,
+  getChildRect,
+} from '../../../utils';
 import * as utils from '../../../theme/template/utils';
 import webData from '../template.config';
 import tempData from '../../../templates/template/element/template.config';
@@ -26,8 +34,7 @@ class EditStateController extends React.Component {
     let nextState = {
       prevProps: props,
     };
-    if (prevProps && props !== prevProps
-      && props.mediaStateSelect !== prevProps.mediaStateSelect) {
+    if (prevProps && props !== prevProps && props.mediaStateSelect !== prevProps.mediaStateSelect) {
       const newState = $self.getResetRectState();
       nextState = {
         ...nextState,
@@ -66,32 +73,39 @@ class EditStateController extends React.Component {
     let stateChild;
     const t = dragula([this.side, this.stage], {
       copy: (el, source) => source === this.side,
-      moves: (el, container, handle) => (
-        handle.classList.contains('drag-hints') || handle.classList.contains('img')
-        || handle.tagName.toLocaleLowerCase() === 'img'
-      ),
+      moves: (el, container, handle) => {
+        return (
+          handle.classList.contains('drag-hints') ||
+          handle.classList.contains('img') ||
+          handle.tagName.toLocaleLowerCase() === 'img'
+        );
+      },
       accepts: (el, source) => {
         if (source === this.stage) {
           const elKey = el.getAttribute('data-key');
           const data = this.state.data;
-          const dArr = Object.keys(data).filter((key) => key.split('_')[0] === elKey)
-            .map((key) => parseFloat(key.split('_')[1])).sort((a, b) => a - b);
-          newId = `${elKey}_${(dArr[dArr.length - 1] + 1) || 0}`;
+          const dArr = Object.keys(data)
+            .filter((key) => key.split('_')[0] === elKey)
+            .map((key) => parseFloat(key.split('_')[1]))
+            .sort((a, b) => a - b);
+          newId = `${elKey}_${dArr[dArr.length - 1] + 1 || 0}`;
           const sourceArray = Array.prototype.slice.call(source.children);
           stateChild = stateChild || sourceArray;
           const placeholder = source.querySelectorAll('.placeholder')[0];
           const ci = sourceArray.indexOf(placeholder);
           if (ci >= 0) {
-            const dom = sourceArray[(ci - 1 >= 0) ? ci - 1 : 0];
+            const dom = sourceArray[ci - 1 >= 0 ? ci - 1 : 0];
             if (dom) {
               placeholder.style.top = ci ? `${dom.offsetTop + dom.offsetHeight}px` : 0;
               placeholder.style.zIndex = dom.style.zIndex;
             }
           }
           const ii = sourceArray.indexOf(el);
-          if (ii >= 0
-            && sourceArray.map((item) => item.getAttribute('id')).join()
-            !== stateChild.map((item) => item.getAttribute('id')).join()) {
+          if (
+            ii >= 0 &&
+            sourceArray.map((item) => item.getAttribute('id')).join() !==
+              stateChild.map((item) => item.getAttribute('id')).join()
+          ) {
             this.setPropsData(el, sourceArray);
             stateChild = sourceArray;
           }
@@ -122,13 +136,14 @@ class EditStateController extends React.Component {
         // 占位符
         if (e.className.indexOf('img-wrapper') >= 0) {
           e.className = 'placeholder';
-          const isZhCN = utils.isZhCN(this.props.location.pathname);
-          e.innerHTML = isZhCN ? '放在此处' : 'Placed here';
+          const isThTH = utils.isThTH(this.props.location.pathname);
+          e.innerHTML = isThTH ? 'วางที่นี่' : 'Placed here';
         }
       })
       .on('out', (el, source) => {
         if (source === this.stage) {
-          if (el.className === 'placeholder') { // || el.className === 'overlay-elem'
+          if (el.className === 'placeholder') {
+            // || el.className === 'overlay-elem'
             this.setPropsData(el, Array.prototype.slice.call(source.children));
           }
         }
@@ -136,10 +151,9 @@ class EditStateController extends React.Component {
       .on('cloned', (clone, original, type) => {
         if (type === 'mirror' && clone.className.indexOf('img-wrapper') === -1) {
           const key = clone.getAttribute('data-key');
-          const keyName = key.replace(/[^a-z]/ig, '');
-          const keyId = parseFloat(key.replace(/[a-z]/ig, ''));
-          const item = webData[keyName].data
-            .filter((c, i) => (c.uid === keyId || i === keyId))[0];
+          const keyName = key.replace(/[^a-z]/gi, '');
+          const keyId = parseFloat(key.replace(/[a-z]/gi, ''));
+          const item = webData[keyName].data.filter((c, i) => c.uid === keyId || i === keyId)[0];
           clone.style.backgroundImage = `url(${item && item.src})`;
           clone.style.backgroundSize = 'cover';
           clone.style.backgroundPosition = 'center top';
@@ -157,7 +171,7 @@ class EditStateController extends React.Component {
       currentSelectRect: {},
       openEditText: false,
     };
-  }
+  };
 
   reRect = (noDispatch) => {
     const newState = this.getResetRectState();
@@ -166,13 +180,13 @@ class EditStateController extends React.Component {
         this.props.dispatch(actions.setCurrentData());
       }
     });
-  }
+  };
 
   reEditItemVisibility = () => {
     if (this.currentData) {
       this.currentData.item.style.visibility = '';
     }
-  }
+  };
 
   onOverlayScroll = (e) => {
     if (e.target === this.dom) {
@@ -181,11 +195,11 @@ class EditStateController extends React.Component {
       this.scrollTop = e.target.scrollTop;
     }
     // this.reRect();
-  }
+  };
 
-  refreshCurrentData = (rectArray) => rectArray.filter((item) => (
-    item.dataId === this.currentData.dataId
-  ))[0];
+  refreshCurrentData = (rectArray) => {
+    return rectArray.filter((item) => item.dataId === this.currentData.dataId)[0];
+  };
 
   wrapperMove = (e) => {
     if (this.state.openEditText) {
@@ -225,7 +239,7 @@ class EditStateController extends React.Component {
         });
       }
     }
-  }
+  };
 
   receiveDomData = (data, iframe, id) => {
     Object.keys(id).forEach((key) => {
@@ -252,7 +266,7 @@ class EditStateController extends React.Component {
     } else {
       this.setState(state);
     }
-  }
+  };
 
   wrapperLeave = () => {
     if (this.state.openEditText) {
@@ -261,13 +275,13 @@ class EditStateController extends React.Component {
     this.setState({
       currentHoverRect: {},
     });
-  }
+  };
 
   closeEditText = () => {
     this.setState({
       openEditText: false,
     });
-  }
+  };
 
   setTemplateConfigData = (text) => {
     const data = deepCopy(this.props.templateData);
@@ -276,7 +290,7 @@ class EditStateController extends React.Component {
     const t = getDataSourceValue(ids[1], data.data.config, [ids[0], 'dataSource']);
     t.children = text;
     this.props.dispatch(actions.setTemplateData(data));
-  }
+  };
 
   setTemplateConfigObject = (obj) => {
     const data = this.props.templateData;
@@ -293,7 +307,7 @@ class EditStateController extends React.Component {
       t[endKey] = obj;
     }
     this.props.dispatch(actions.setTemplateData(data));
-  }
+  };
 
   editTextHandleBlur = (text) => {
     // 修改 props 里的 dataSource 数据
@@ -303,7 +317,7 @@ class EditStateController extends React.Component {
       this.closeEditText();
       this.reEditItemVisibility();
     });
-  }
+  };
 
   editTextHandleChange = (b) => {
     this.isInput = true;
@@ -311,7 +325,7 @@ class EditStateController extends React.Component {
     const height = b.scrollHeight;
     b.parentNode.parentNode.style.height = `${height}px`;
     b.style.height = '';
-  }
+  };
 
   getDataSourceChildren = (_t, id) => {
     const ids = id.split('&');
@@ -329,7 +343,7 @@ class EditStateController extends React.Component {
       }
     });
     return t;
-  }
+  };
 
   getCatcherDom = (rect, css) => {
     if (rect.width || rect.width === 0) {
@@ -337,14 +351,17 @@ class EditStateController extends React.Component {
       let editData;
       if (css === 'select') {
         const currentConfigDataSource = mergeEditDataToDefault(
-          this.props.templateData.data.config[this.currentIdArray[0]], tempData[this.editId]);
-        editData = this.getDataSourceChildren(currentConfigDataSource,
-          this.editChildId);
+          this.props.templateData.data.config[this.currentIdArray[0]],
+          tempData[this.editId],
+        );
+        editData = this.getDataSourceChildren(currentConfigDataSource, this.editChildId);
         editText = editData.children;
-        editText = typeof editText === 'string' && editText.match(isImg) ? 'Please enter...' : editText;
+        editText =
+          typeof editText === 'string' && editText.match(isImg) ? 'Please enter...' : editText;
       }
       return (
-        <div className={css}
+        <div
+          className={css}
           style={{
             width: rect.width,
             height: rect.height,
@@ -370,9 +387,9 @@ class EditStateController extends React.Component {
             <div className="edit-text-wrapper">
               <Editor
                 onChange={this.editTextHandleChange}
-                onBlur={this.editTextHandleBlur}// 记录编辑 history
+                onBlur={this.editTextHandleBlur} // 记录编辑 history
                 text={editText}
-                textToString={editData.toText}// 有 toText 用 innerText
+                textToString={editData.toText} // 有 toText 用 innerText
                 ref={(c) => {
                   const d = ReactDOM.findDOMNode(c);
                   if (!d) {
@@ -390,7 +407,8 @@ class EditStateController extends React.Component {
               <style
                 dangerouslySetInnerHTML={{
                   __html: `.edit-text-wrapper{${
-                    document.defaultView.getComputedStyle(this.currentData.item).cssText}
+                    document.defaultView.getComputedStyle(this.currentData.item).cssText
+                  }
                     visibility: inherit;
                   }`,
                 }}
@@ -400,29 +418,32 @@ class EditStateController extends React.Component {
         </div>
       );
     }
-  }
+  };
 
   selectSteState = (currentSelectRect, editData, dom, id) => {
-    this.setState({
-      currentHoverRect: currentSelectRect,
-      currentSelectRect,
-      editButton: editData && editData.split(','), // 文字与图片按钮配置
-      openEditText: false,
-    }, () => {
-      const { data } = this.state;
-      this.props.dispatch(actions.setCurrentData(
-        {
-          dom,
-          parentDom: dom.parentNode,
-          id,
-          reRect: this.reRect,
-          iframe: this.state.iframe,
-          currentPopover: data && data.currentPopover,
-        }
-      ));
-    });
+    this.setState(
+      {
+        currentHoverRect: currentSelectRect,
+        currentSelectRect,
+        editButton: editData && editData.split(','), // 文字与图片按钮配置
+        openEditText: false,
+      },
+      () => {
+        const { data } = this.state;
+        this.props.dispatch(
+          actions.setCurrentData({
+            dom,
+            parentDom: dom.parentNode,
+            id,
+            reRect: this.reRect,
+            iframe: this.state.iframe,
+            currentPopover: data && data.currentPopover,
+          }),
+        );
+      },
+    );
     this.reEditItemVisibility();
-  }
+  };
 
   setPropsData = (el, children) => {
     const template = children.map((item) => item.getAttribute('id')).filter((id) => id);
@@ -449,11 +470,15 @@ class EditStateController extends React.Component {
       const currentDom = this.currentData.item;
       const editData = currentDom.getAttribute('data-edit');
 
-      this.selectSteState(this.state.currentHoverRect,
-        editData, currentDom, this.mouseCurrentData.dataId);
+      this.selectSteState(
+        this.state.currentHoverRect,
+        editData,
+        currentDom,
+        this.mouseCurrentData.dataId,
+      );
     }
     this.isDrag = false;
-  }
+  };
 
   onEditSelectChange = (v) => {
     if (!v) {
@@ -468,7 +493,7 @@ class EditStateController extends React.Component {
     this.currentData.rect.y = currentDomRect.y;
     const editData = currentDom.getAttribute('data-edit');
     this.selectSteState(this.currentData.rect, editData, currentDom, v.dataId);
-  }
+  };
 
   editTextFunc = () => {
     this.currentData.item.style.visibility = 'hidden';
@@ -476,19 +501,23 @@ class EditStateController extends React.Component {
     this.setState({
       openEditText: true,
     });
-  }
+  };
 
   onDoubleClick = (e) => {
     const dom = e.target;
     if (dom.getAttribute('data-key') && this.mouseCurrentData) {
       this.currentData = this.mouseCurrentData;
       const editData = this.currentData.item.getAttribute('data-edit');
-      if (editData && editData.indexOf('text') >= 0
-        && editData !== 'texty' && editData.indexOf('textAndImage') === -1) {
+      if (
+        editData &&
+        editData.indexOf('text') >= 0 &&
+        editData !== 'texty' &&
+        editData.indexOf('textAndImage') === -1
+      ) {
         this.editTextFunc();
       }
     }
-  }
+  };
 
   onFuncClick = (type, key) => {
     this.reRect();
@@ -519,15 +548,18 @@ class EditStateController extends React.Component {
         break;
     }
     if (this.state.openEditText) {
-      this.setState({
-        openEditText: false,
-      }, () => {
-        this.props.dispatch(actions.setTemplateData(templateData));
-      });
+      this.setState(
+        {
+          openEditText: false,
+        },
+        () => {
+          this.props.dispatch(actions.setTemplateData(templateData));
+        },
+      );
     } else {
       this.props.dispatch(actions.setTemplateData(templateData));
     }
-  }
+  };
 
   getFuncIconChild = (i, dataArray, key) => {
     return ['up', 'down', 'delete'].map((type) => {
@@ -551,13 +583,15 @@ class EditStateController extends React.Component {
           type="primary"
           disabled={disabled}
           key={type}
-          onClick={(e) => { this.onFuncClick(type, key, e); }}
+          onClick={(e) => {
+            this.onFuncClick(type, key, e);
+          }}
         >
           {child}
         </Button>
       );
     });
-  }
+  };
 
   getFuncCompChild = (comp, dataId) => {
     const compArray = comp.split('=');
@@ -580,7 +614,7 @@ class EditStateController extends React.Component {
       default:
         return null;
     }
-  }
+  };
 
   render() {
     const { className, mediaStateSelect } = this.props;
@@ -605,13 +639,9 @@ class EditStateController extends React.Component {
           className="overlay-elem"
         >
           <div className="drag-hints">
-            <BarsOutlined />
-            {' '}
-            <FormattedMessage id="app.state.drag" />
+            <BarsOutlined /> <FormattedMessage id="app.state.drag" />
           </div>
-          <div className="func-wrapper">
-            {this.getFuncIconChild(i, dataArray, key)}
-          </div>
+          <div className="func-wrapper">{this.getFuncIconChild(i, dataArray, key)}</div>
           {item.comp && this.getFuncCompChild(item.comp, key)}
         </div>
       );
@@ -622,7 +652,9 @@ class EditStateController extends React.Component {
         className={`${className}${mediaStateSelect === 'Mobile' ? ' mobile' : ''}`}
         onScroll={this.onOverlayScroll}
         onMouseLeave={this.wrapperLeave}
-        ref={(c) => { this.dom = c; }}
+        ref={(c) => {
+          this.dom = c;
+        }}
       >
         <div
           data-key="wrapper"
@@ -636,8 +668,9 @@ class EditStateController extends React.Component {
           {overlayChild}
         </div>
         <div className="mouse-catcher" style={{ height: overlayHeight }}>
-          {!objectEqual(currentHoverRect, currentSelectRect) && !openEditText
-            && this.getCatcherDom(currentHoverRect, 'hover')}
+          {!objectEqual(currentHoverRect, currentSelectRect) &&
+            !openEditText &&
+            this.getCatcherDom(currentHoverRect, 'hover')}
           {this.currentData && this.getCatcherDom(currentSelectRect, 'select')}
         </div>
       </div>
