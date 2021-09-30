@@ -50,55 +50,64 @@ class NavController extends React.PureComponent {
     const { templateData } = this.props;
     // 如果在预览页清除数据，再生成预览将没有数据，手动写入；
     window.document.getElementById('myIframe').contentWindow.postMessage(templateData, '*');
-    const url = `${location.port ? `${location.protocol}//${location.hostname}:7113/`
-      : `${location.origin}/templates/`}#uid=${templateData.uid}`;
+    const url = `${
+      location.port
+        ? `${location.protocol}//${location.hostname}:7113/`
+        : `${location.origin}/templates/`
+    }#uid=${templateData.uid}`;
     window.open(url);
-  }
+  };
 
   onSave = (e, type, templateData, cb) => {
     if (type === 'menu' && !location.port && window.gtag) {
       window.gtag('event', 'save');
     }
-    this.setState({
-      saveLoad: true,
-    }, () => {
-      const finalTemplateData = templateData || this.props.templateData;
-      saveData(finalTemplateData).then(() => {
-        const { dispatch } = this.props;
-        dispatch(actions.setTemplateData(finalTemplateData));
-        if (!cb) {
-          message.success(this.props.intl.formatMessage({ id: 'app.header.save.message' }));
-        } else {
-          cb();
-        }
-        this.setState({ saveLoad: false });
-      }).catch((error) => {
-        console.error(JSON.stringify(error));
-        message.error(this.props.intl.formatMessage({ id: 'app.header.save.message.error' }));
-        cb();
-      });
-    });
-  }
+    this.setState(
+      {
+        saveLoad: true,
+      },
+      () => {
+        const finalTemplateData = templateData || this.props.templateData;
+        saveData(finalTemplateData)
+          .then(() => {
+            const { dispatch } = this.props;
+            dispatch(actions.setTemplateData(finalTemplateData));
+            if (!cb) {
+              message.success(this.props.intl.formatMessage({ id: 'app.header.save.message' }));
+            } else {
+              cb();
+            }
+            this.setState({ saveLoad: false });
+          })
+          .catch((error) => {
+            console.error(JSON.stringify(error));
+            message.error(this.props.intl.formatMessage({ id: 'app.header.save.message.error' }));
+            cb();
+          });
+      },
+    );
+  };
 
   onSaveCode = () => {
     if (!location.port && window.gtag) {
       window.gtag('event', 'download');
     }
-    this.setState({
-      downloadLoad: true,
-    }, () => {
-      saveJsZip(this.props.templateData, (c) => {
-        if (c !== 'error') {
-          message.success(
-            this.props.intl.formatMessage({ id: 'app.header.download.message' })
-          );
-        }
-        this.setState({
-          downloadLoad: false,
+    this.setState(
+      {
+        downloadLoad: true,
+      },
+      () => {
+        saveJsZip(this.props.templateData, (c) => {
+          if (c !== 'error') {
+            message.success(this.props.intl.formatMessage({ id: 'app.header.download.message' }));
+          }
+          this.setState({
+            downloadLoad: false,
+          });
         });
-      });
-    });
-  }
+      },
+    );
+  };
 
   // TODO: move this to localStorage.js?
   onRemoveAllLocalStorage = () => {
@@ -110,7 +119,7 @@ class NavController extends React.PureComponent {
     ls.removeUserTemplateIds(DEFAULT_USER_NAME);
 
     location.href = location.origin;
-  }
+  };
 
   onChangeDataOpenModal = () => {
     if (!this.state.codeModalShow) {
@@ -127,14 +136,14 @@ class NavController extends React.PureComponent {
     this.setState({
       codeModalShow: !this.state.codeModalShow,
     });
-  }
+  };
 
   onSaveJSON = () => {
     const { data } = this.props.templateData;
     saveJSON(JSON.stringify(data), () => {
       message.success(this.props.intl.formatMessage({ id: 'app.header.save.message' }));
     });
-  }
+  };
 
   onSaveData = () => {
     // json 保存
@@ -151,22 +160,23 @@ class NavController extends React.PureComponent {
       }
       this.onChangeDataOpenModal();
     }, 100);
-  }
+  };
 
   onUploadCloud = () => {
     this.setState({
       publishModalShow: !this.state.publishModalShow,
     });
-  }
+  };
 
   changePublishState = (b) => {
     this.setState({
       publishLoad: b,
     });
-  }
+  };
 
   render() {
-    const { saveLoad, downloadLoad, publishLoad, code, codeModalShow, publishModalShow } = this.state;
+    const { saveLoad, downloadLoad, publishLoad, code, codeModalShow, publishModalShow } =
+      this.state;
     const menuChild = [
       {
         name: <FormattedMessage id="app.header.save" key="m" />,
@@ -182,6 +192,7 @@ class NavController extends React.PureComponent {
         name: <FormattedMessage id="app.header.download" key="m" />,
         icon: downloadLoad ? <LoadingOutlined /> : <CodeOutlined />,
         onClick: downloadLoad ? null : this.onSaveCode,
+        display: 'none',
       },
       {
         name: <FormattedMessage id="app.header.publish-cloud" key="m" />,
@@ -222,7 +233,7 @@ class NavController extends React.PureComponent {
         );
       }
       return (
-        <li key={i.toString()}>
+        <li key={i.toString()} style={{ display: item.display || 'inline-block' }}>
           {children}
         </li>
       );
@@ -237,9 +248,7 @@ class NavController extends React.PureComponent {
             />
           </div>
         </a>
-        <ul className="menu">
-          {menuChild}
-        </ul>
+        <ul className="menu">{menuChild}</ul>
         <NewFileButton />
         <HistoryButton />
         <Modal

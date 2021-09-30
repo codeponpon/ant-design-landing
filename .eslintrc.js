@@ -58,6 +58,7 @@ const eslintrc = {
     'react/static-property-placement': 0,
     'operator-linebreak': 0,
     'react/jsx-one-expression-per-line': 0,
+    'react/jsx-wrap-multilines': 0,
     indent: 0,
   },
 };

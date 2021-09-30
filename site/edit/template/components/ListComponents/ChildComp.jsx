@@ -31,7 +31,7 @@ export default class ChildComp extends React.Component {
     const { templateData, dataId } = props;
     const id = dataId.split('_')[0];
     return mergeEditDataToDefault(templateData.data.config[dataId], tempData[id]);
-  }
+  };
 
   onListChange = (e, ids, currentData, childKey) => {
     currentData[childKey] = e.map((item) => {
@@ -40,7 +40,7 @@ export default class ChildComp extends React.Component {
       })[0];
     });
     this.props.onChange(ids, currentData);
-  }
+  };
 
   onSlideDelete = (e, ids, currentData, childKey) => {
     const children = currentData[childKey];
@@ -50,11 +50,11 @@ export default class ChildComp extends React.Component {
     /* currentData.children
       .map(node => (node === e ? { ...node, delete: true } : node)); */
     this.props.onChange(ids, currentData);
-  }
+  };
 
   onAddSelect = (value) => {
     this.editType = value;
-  }
+  };
 
   onAdd = (ids, currentData, childKey) => {
     let newData;
@@ -63,7 +63,10 @@ export default class ChildComp extends React.Component {
       newData = {
         name: `${name}~${getRandomKey()}`,
         className: '',
-        children: name === 'image' ? 'https://zos.alipayobjects.com/rmsportal/HzvPfCGNCtvGrdk.png' : '新增文字',
+        children:
+          name === 'image'
+            ? 'https://zos.alipayobjects.com/rmsportal/HzvPfCGNCtvGrdk.png'
+            : '新增文字',
       };
       if (name === 'button') {
         newData.children = {
@@ -75,11 +78,11 @@ export default class ChildComp extends React.Component {
     } else {
       newData = deepCopy(currentData[childKey][currentData[childKey].length - 1]);
       delete newData.delete;
-      newData.name = `${newData.name.split('~')[0].replace(/[0-9]/ig, '')}~${getRandomKey()}`;
+      newData.name = `${newData.name.split('~')[0].replace(/[0-9]/gi, '')}~${getRandomKey()}`;
     }
     currentData[childKey].push(newData);
     this.props.onChange(ids, currentData);
-  }
+  };
 
   render() {
     const { edit, currentEditData, templateData } = this.props;
@@ -89,8 +92,10 @@ export default class ChildComp extends React.Component {
     const ids = id.split('-');
     const cid = ids[0].split('_')[0];
     const tempDataSource = tempData[cid];
-    const newTempDataSource = mergeEditDataToDefault(templateData.data.config[ids[0]],
-      tempDataSource);
+    const newTempDataSource = mergeEditDataToDefault(
+      templateData.data.config[ids[0]],
+      tempDataSource,
+    );
     let currentEditTemplateData = getDataSourceValue(ids[1], newTempDataSource);
     const idChildArray = ids[1].split('&');
     const childIsArray = currentEditTemplateData && Array.isArray(currentEditTemplateData.children);
@@ -132,45 +137,40 @@ export default class ChildComp extends React.Component {
         }
       });
     }
-    const childrenToRender = currentEditTemplateData[childKey].filter((c) => c && !c.delete).map((item) => {
-      return (
-        <div key={item.name} className="sort-manage">
-          <div className="sort-manage-name">
-            {item.name}
+    const childrenToRender = currentEditTemplateData[childKey]
+      .filter((c) => c && !c.delete)
+      .map((item) => {
+        return (
+          <div key={item.name} className="sort-manage">
+            <div className="sort-manage-name">{item.name}</div>
+            <div className="sort-manage-delete">
+              <Button
+                onClick={() => {
+                  this.onSlideDelete(item, ids, currentEditTemplateData, childKey);
+                }}
+                size="small"
+                shape="circle"
+                icon={<DeleteOutlined />}
+                disabled={currentEditTemplateData[childKey].length === 1}
+              />
+            </div>
           </div>
-          <div className="sort-manage-delete">
-            <Button
-              onClick={() => {
-                this.onSlideDelete(item, ids, currentEditTemplateData, childKey);
-              }}
-              size="small"
-              shape="circle"
-              icon={<DeleteOutlined />}
-              disabled={currentEditTemplateData[childKey].length === 1}
-            />
-          </div>
-        </div>
-      );
-    });
+        );
+      });
     return (
       <Collapse bordered={false} defaultActiveKey={['1']} className="child-wrapper">
-        <Panel
-          header={(
-            <FormattedMessage id="app.edit.children.header" />
-          )}
-          key="1"
-        >
+        <Panel header={<FormattedMessage id="app.edit.children.header" />} key="1">
           <Row gutter={8}>
             <Col span={24}>
               <ListSort
                 dragClassName="list-drag-selected"
                 className="sort-manage-list"
                 key="list"
-                dragElement={(
+                dragElement={
                   <div className="sort-manage-icon">
                     <BarsOutlined />
                   </div>
-                )}
+                }
                 onChange={(e) => {
                   this.onListChange(e, ids, currentEditTemplateData, childKey);
                 }}
@@ -185,7 +185,11 @@ export default class ChildComp extends React.Component {
                 <FormattedMessage id="app.edit.children.type" />
               </Col>
               <Col span={18}>
-                <Select defaultValue={this.editAddDefault[0]} size="small" onChange={this.onAddSelect}>
+                <Select
+                  defaultValue={this.editAddDefault[0]}
+                  size="small"
+                  onChange={this.onAddSelect}
+                >
                   {this.editAddDefault.map((c) => (
                     <Option value={c} key={c}>
                       {c}
@@ -196,9 +200,7 @@ export default class ChildComp extends React.Component {
             </Row>
           ) : (
             <div style={{ margin: '8px 0' }}>
-              <ExclamationCircleOutlined />
-              {' '}
-              <FormattedMessage id="app.edit.children.remarks" />
+              <ExclamationCircleOutlined /> <FormattedMessage id="app.edit.children.remarks" />
             </div>
           )}
           <Row gutter={8}>
