@@ -48,7 +48,7 @@ module.exports = {
     'app.footer.fengdie.slogan': 'Mobile web app builder',
     'app.footer.seeconf': 'Seeking Experience & Engineering Conference',
     'app.footer.xcloud': 'Ant Experience Cloud',
-    'app.footer.lang': 'ภาษาไทย',
+    'app.footer.lang': 'English',
     'app.layout.notification.title': 'Need Github star',
     'app.layout.notification.content':
       'We need your support, please click the button to help us increase.',

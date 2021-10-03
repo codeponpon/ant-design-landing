@@ -171,7 +171,7 @@
         liArray = [],
         load = document.getElementById('ant-motion-load'),
         ul = load.getElementsByTagName('ul')[0];
-      for (var i = 0; i < 74; i++) {
+      for (var i = 0; i < 68; i++) {
         var li = document.createElement('li'); //$('<li/>').appendTo($('#ant-motion-load ul'));
         ul.appendChild(li);
         liArray.push(li);
@@ -182,19 +182,20 @@
         if (i < 25) {
           _left = -wx;
           _top = wy - (r / 5) * i;
-        } else if (i < 41) {
-          angle = (45 * Math.PI) / 180;
+        } else if (i < 44) {
+          angle = (0 * Math.PI) / 180;
           _left = -wx + (i - 24) * (r / 5) * Math.cos(angle);
           _top = wy - (r / 5) * 24 + (i - 24) * (r / 5) * Math.sin(angle);
         } else if (i < 57) {
-          _x = -wx + 16 * (r / 5) * Math.cos((45 * Math.PI) / 180);
-          _y = wy - (r / 5) * 24 + 16 * (r / 5) * Math.sin((45 * Math.PI) / 180);
-          angle = (-45 * Math.PI) / 180;
-          _left = _x + (i - 40) * (r / 5) * Math.cos(angle);
-          _top = _y + (i - 40) * (r / 5) * Math.sin(angle);
-        } else if (i < 73) {
-          _left = _x + 16 * (r / 5) * Math.cos((-45 * Math.PI) / 180);
-          _top = wy - (r / 5) * 24 + (r / 5) * (i - 56);
+          _x = -wx + 28 * (r / 5) * Math.cos((45 * Math.PI) / 180);
+          _y = wy - (r / 5) * 33 + 16 * (r / 5) * Math.sin((45 * Math.PI) / 180);
+          angle = (90 * Math.PI) / 180;
+          _left = _x + (i - 53) * (r / 5) * Math.cos(angle);
+          _top = _y + (i - 46) * (r / 5) * Math.sin(angle);
+        } else if (i < 69) {
+          angle = (180 * Math.PI) / 180;
+          _left = -wx + (i - 76) * (r / 5) * Math.cos(angle);
+          _top = wy - (r / 5) * 11 + (i - 24) * (r / 5) * Math.sin(angle);
         } else {
           _left = -25;
           _top = 10;
