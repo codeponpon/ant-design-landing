@@ -122,6 +122,7 @@ module.exports = {
     'app.state.link.header': 'Paste link url',
     'app.state.link.url': 'Link url:',
     'app.state.link.blank': 'Popup page:',
+    'app.state.link.to': 'New Page:',
     'app.state.link.type': 'Type:',
     'app.state.link.icon': 'Button Icon:',
     'app.state.link.icon.remarks': 'Only support Ant Design icon.',

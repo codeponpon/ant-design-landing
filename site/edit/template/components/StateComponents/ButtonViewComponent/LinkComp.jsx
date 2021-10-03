@@ -1,9 +1,6 @@
 import React from 'react';
 import { Button, Popover, Input, Row, Col, Switch, Select, Tooltip } from 'antd';
-import {
-  QuestionCircleOutlined,
-  LinkOutlined,
-} from '@ant-design/icons';
+import { QuestionCircleOutlined, LinkOutlined } from '@ant-design/icons';
 import { FormattedMessage } from 'react-intl';
 
 const { Option } = Select;
@@ -17,7 +14,7 @@ export default class LinkComp extends React.Component {
       editData[key] = key === 'target' ? c : v;
     }
     this.props.setTemplateConfigObject(editData);
-  }
+  };
 
   render() {
     const { editData, type } = this.props;
@@ -26,7 +23,7 @@ export default class LinkComp extends React.Component {
       <Popover
         placement="bottomRight"
         title={<FormattedMessage id="app.state.link.header" />}
-        content={(
+        content={
           <div>
             {isButton && [
               <Row key="1">
@@ -84,10 +81,25 @@ export default class LinkComp extends React.Component {
             </Row>
             <Row style={{ marginTop: 16 }}>
               <Col span={8} style={{ textAlign: 'right', paddingRight: '8px' }}>
+                <FormattedMessage id="app.state.link.to" />
+              </Col>
+              <Col span={16}>
+                <Switch
+                  size="small"
+                  checked={!!editData.to}
+                  onChange={(e) => {
+                    this.onValueChange(e, 'to');
+                  }}
+                />
+              </Col>
+            </Row>
+            <Row style={{ marginTop: 16 }}>
+              <Col span={8} style={{ textAlign: 'right', paddingRight: '8px' }}>
                 <FormattedMessage id="app.state.link.blank" />
               </Col>
               <Col span={16}>
-                <Switch size="small"
+                <Switch
+                  size="small"
                   checked={!!editData.target}
                   onChange={(e) => {
                     this.onValueChange(e, 'target');
@@ -96,7 +108,7 @@ export default class LinkComp extends React.Component {
               </Col>
             </Row>
           </div>
-        )}
+        }
         trigger="click"
       >
         <Button type="primary" size="small" onClick={this.props.closeEditText}>
