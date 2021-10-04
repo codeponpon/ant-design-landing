@@ -99,6 +99,7 @@ module.exports = {
     'app.edit.banner-anim.sync.remark':
       'Whether to play synchronously with the child animation when sliding.',
     'app.edit.menu.open': 'Open',
+    'app.edit.menu.open.remark': 'Mobile mode only, Click to toggle on/off',
     'app.edit.menu.child': 'Have SubMenu',
     'app.edit.menu.child.remark':
       'Default add menus with pictures, titles and text. For modifications, please click on the open SubMenu.',

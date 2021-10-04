@@ -272,7 +272,7 @@ class PublishModal extends React.Component {
     const locale = isThTH(location.pathname) ? 'th-TH' : 'en-US';
     const page = templateData.data.page || {};
     const url = `${templateData.uid}.vercel.app`;
-    console.log('PROPS:', this.props);
+
     return (
       <Modal {...props}>
         {isLoad ? (

@@ -5,7 +5,7 @@ import {
   LockOutlined,
   WarningOutlined,
   PlusCircleOutlined,
-  // UnlockOutlined,
+  UnlockOutlined,
   // FolderOutlined,
   // VideoCameraOutlined,
 } from '@ant-design/icons';
@@ -192,13 +192,13 @@ class SideMenu extends React.PureComponent {
   };
 
   render() {
-    const { location } = this.props;
-    // const { templateData, location } = this.props;
-    // const isLock =
-    //   templateData.data &&
-    //   templateData.data.user &&
-    //   templateData.data.user.username &&
-    //   !templateData.data.user.delete;
+    // const { location } = this.props;
+    const { templateData, location } = this.props;
+    const isLock =
+      templateData.data &&
+      templateData.data.user &&
+      templateData.data.user.username &&
+      !templateData.data.user.delete;
     const passwordChild = this.getPasswordChild();
     const isThTH = utils.isThTH(location.pathname);
     const drawerChild = this.getDrawer(isThTH);
@@ -222,7 +222,7 @@ class SideMenu extends React.PureComponent {
             <Tooltip title={<FormattedMessage id="app.side.lang" />} placement="right">
               <li onClick={this.handleLangChange}>{isThTH ? 'En' : 'Th'}</li>
             </Tooltip>
-            {/* <Tooltip
+            <Tooltip
               title={
                 isLock ? (
                   <FormattedMessage id="app.side.decrypt" />
@@ -236,7 +236,7 @@ class SideMenu extends React.PureComponent {
                 {isLock ? <LockOutlined /> : <UnlockOutlined />}
               </li>
             </Tooltip>
-            <Tooltip title={<FormattedMessage id="app.side.umi-example" />} placement="right">
+            {/* <Tooltip title={<FormattedMessage id="app.side.umi-example" />} placement="right">
               <li>
                 <a href="https://github.com/ant-motion/landing-umi-example" target="_blank">
                   <FolderOutlined />
