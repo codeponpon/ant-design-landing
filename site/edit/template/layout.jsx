@@ -21,7 +21,7 @@ const FormItem = Form.Item;
 class Layout extends React.PureComponent {
   state = {
     loading: false,
-  }
+  };
 
   formRef = React.createRef();
 
@@ -40,9 +40,7 @@ class Layout extends React.PureComponent {
         duration: 10000,
         message: this.props.intl.formatMessage({ id: 'app.layout.notification.title' }),
         description: (
-          <div>
-            {this.props.intl.formatMessage({ id: 'app.layout.notification.content' })}
-          </div>
+          <div>{this.props.intl.formatMessage({ id: 'app.layout.notification.content' })}</div>
         ),
       });
     }
@@ -52,28 +50,31 @@ class Layout extends React.PureComponent {
   onLogin = (values) => {
     const { templateData, dispatch } = this.props;
     const id = templateData.data.user.userId;
-    this.setState({
-      loading: true,
-    }, () => {
-      logIn(values.password, id, (succeeded) => {
-        if (succeeded) {
-          dispatch(actions.setUserData(true));
-          message.success('登入成功。');
-        } else {
-          this.formRef.current.setFields([
-            {
-              name: 'password',
-              value: values.password,
-              errors: ['Password error.'],
-            },
-          ]);
-        }
-        this.setState({
-          loading: false,
+    this.setState(
+      {
+        loading: true,
+      },
+      () => {
+        logIn(values.password, id, (succeeded) => {
+          if (succeeded) {
+            dispatch(actions.setUserData(true));
+            message.success('Login Successful!');
+          } else {
+            this.formRef.current.setFields([
+              {
+                name: 'password',
+                value: values.password,
+                errors: ['Password error.'],
+              },
+            ]);
+          }
+          this.setState({
+            loading: false,
+          });
         });
-      });
-    });
-  }
+      },
+    );
+  };
 
   render() {
     const { templateData, userIsLogin } = this.props;
@@ -92,10 +93,16 @@ class Layout extends React.PureComponent {
         </div>
       );
     }
-    if (templateData.data.user && templateData.data.user.userId && !templateData.data.user.delete && !userIsLogin) {
+    if (
+      templateData.data.user &&
+      templateData.data.user.userId &&
+      !templateData.data.user.delete &&
+      !userIsLogin
+    ) {
       let passwordNo;
       if (this.formRef.current) {
-        passwordNo = this.formRef.current.getFieldsError(['password'])
+        passwordNo = this.formRef.current
+          .getFieldsError(['password'])
           .filter(({ errors }) => errors.indexOf('Password error.') >= 0).length;
       }
       return (
@@ -127,31 +134,32 @@ class Layout extends React.PureComponent {
                 />
               </FormItem>
               <FormItem shouldUpdate>
-                {
-                  () => (
-                    <Button
-                      loading={this.state.loading}
-                      disabled={!this.formRef.current
-                        || !this.formRef.current.isFieldsTouched(true)
-                        || this.formRef.current.getFieldsError().filter(({ errors }) => errors.length).length}
-                      type="primary"
-                      htmlType="submit"
-                      style={{ width: '100%' }}
-                    >
-                      <FormattedMessage id="app.common.ok" />
-                    </Button>
-                  )
-                }
+                {() => (
+                  <Button
+                    loading={this.state.loading}
+                    disabled={
+                      !this.formRef.current ||
+                      !this.formRef.current.isFieldsTouched(true) ||
+                      this.formRef.current.getFieldsError().filter(({ errors }) => errors.length)
+                        .length
+                    }
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: '100%' }}
+                  >
+                    <FormattedMessage id="app.common.ok" />
+                  </Button>
+                )}
               </FormItem>
             </Form>
             <div>
               <p>
-                <WarningOutlined />
-                {' '}
-                <FormattedMessage id="app.login.noPassword" />
+                <WarningOutlined /> <FormattedMessage id="app.login.noPassword" />
               </p>
               <NewFileButton>
-                <Button style={{ width: '100%' }}><FormattedMessage id="app.login.new" /></Button>
+                <Button style={{ width: '100%' }}>
+                  <FormattedMessage id="app.login.new" />
+                </Button>
               </NewFileButton>
             </div>
           </div>
@@ -166,9 +174,7 @@ class Layout extends React.PureComponent {
             <SideMenu {...this.props} />
             <div className="edit-stage-wrapper">
               <EditInfluence {...this.props} />
-              <Iframe
-                className="edit-preview"
-              />
+              <Iframe className="edit-preview" />
               <EditStageController {...this.props} />
             </div>
           </div>

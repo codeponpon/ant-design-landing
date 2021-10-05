@@ -99,6 +99,7 @@ module.exports = {
     'app.edit.banner-anim.sync.remark':
       'Whether to play synchronously with the child animation when sliding.',
     'app.edit.menu.open': 'Open',
+    'app.edit.menu.open.remark': 'ใช้ได้กับมือถือเท่านั้น กดเพื่อสลับเปิด/ปิด',
     'app.edit.menu.child': 'Have SubMenu',
     'app.edit.menu.child.remark':
       'Default add menus with pictures, titles and text. For modifications, please click on the open SubMenu.',
@@ -122,6 +123,7 @@ module.exports = {
     'app.state.link.header': 'Paste link url',
     'app.state.link.url': 'Link url:',
     'app.state.link.blank': 'Popup page:',
+    'app.state.link.to': 'New Page:',
     'app.state.link.type': 'Type:',
     'app.state.link.icon': 'Button Icon:',
     'app.state.link.icon.remarks': 'Only support Ant Design icon.',
