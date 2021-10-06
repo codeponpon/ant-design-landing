@@ -5,7 +5,12 @@ import { Link } from 'rc-scroll-anim';
 import { polyfill } from 'react-lifecycles-compat';
 import './index.less';
 /* replace-end */
+import { DrawerForm } from '@ant-design/pro-form';
+import { message } from 'antd';
+
 class Header extends React.Component {
+  formRef = React.createRef();
+
   /* replace-start */
   static getDerivedStateFromProps(props, { prevProps }) {
     const { func } = props;
@@ -31,7 +36,15 @@ class Header extends React.Component {
     this.setState({
       phoneOpen,
     });
-  }
+  };
+
+  waitTime = (time = 100) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, time);
+    });
+  };
 
   render() {
     const { dataSource, isMobile, ...props } = this.props;
@@ -39,26 +52,68 @@ class Header extends React.Component {
     const { phoneOpen } = this.state;
     const { LinkMenu } = dataSource;
     const navData = LinkMenu.children;
-    const navChildren = Object.keys(navData)
-      .map((key, i) => {
-        const item = navData[key];
-        let tag = Link;
-        const tagProps = {
-          /* replace-start */
-          'data-edit': 'LinkMenu',
-          /* replace-end */
+    const navChildren = Object.keys(navData).map((key, i) => {
+      const { drawer, disabled, ...item } = navData[key];
+      let tag = Link;
+      let tagProps = {
+        /* replace-start */
+        'data-edit': 'LinkMenu',
+        /* replace-end */
+      };
+      if (item.to && item.to.match(/\//g)) {
+        tagProps.href = item.to;
+        tag = 'a';
+        delete item.to;
+      }
+      if (drawer) {
+        tag = DrawerForm;
+        tagProps = {
+          width: isMobile ? '100%' : '400px',
+          title: 'Main Title',
+          formRef: this.formRef,
+          trigger: <Link to={item.to}>{navData[key].children}</Link>,
+          drawerProps: { forceRender: true, destroyOnClose: true },
+          onFinish: async (values) => {
+            await this.waitTime(2000);
+            console.log(values.name);
+            message.success('Submitted successfully');
+            // do not close the popup
+            return true;
+          },
         };
-        if (item.to && item.to.match(/\//g)) {
-          tagProps.href = item.to;
-          tag = 'a';
-          delete item.to;
-        }
-        return React.createElement(tag, { ...item, ...tagProps, key: i.toString() },
-          /* replace-start-value = navData[key].children */
-          React.createElement('span', { dangerouslySetInnerHTML: { __html: navData[key].children } })
-          /* replace-end-value */
+        return (
+          <div {...item} key={i.toString()}>
+            <DrawerForm {...tagProps}>
+              <DrawerForm
+                title="Sub Title"
+                formRef={this.formRef}
+                trigger={<Link>Sub Content</Link>}
+                drawerProps={{
+                  forceRender: true,
+                  destroyOnClose: true,
+                }}
+                onFinish={async (values) => {
+                  await this.waitTime(2000);
+                  console.log(values.name);
+                  message.success('Submitted successfully');
+                  // do not close the popup
+                  return true;
+                }}
+                width={isMobile ? '100%' : '400px'}
+              />
+            </DrawerForm>
+          </div>
         );
-      });
+      }
+
+      return React.createElement(
+        tag,
+        { ...item, ...tagProps, key: i.toString() },
+        /* replace-start-value = navData[key].children */
+        React.createElement('span', { dangerouslySetInnerHTML: { __html: navData[key].children } }),
+        /* replace-end-value */
+      );
+    });
     const moment = phoneOpen === undefined ? 300 : null;
     return (
       <TweenOne
@@ -71,10 +126,7 @@ class Header extends React.Component {
           {...dataSource.page}
           className={`${dataSource.page.className}${phoneOpen ? ' open' : ''}`}
         >
-          <TweenOne
-            animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }}
-            {...dataSource.logo}
-          >
+          <TweenOne animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }} {...dataSource.logo}>
             <img width="100%" src={dataSource.logo.children} alt="img" />
           </TweenOne>
           {isMobile && (
@@ -85,7 +137,7 @@ class Header extends React.Component {
               }}
               /* replace-start */
               data-edit="LinkMenu"
-            /* replace-end */
+              /* replace-end */
             >
               <em />
               <em />
@@ -94,21 +146,25 @@ class Header extends React.Component {
           )}
           <TweenOne
             {...LinkMenu}
-            animation={isMobile ? {
-              height: 0,
-              duration: 300,
-              onComplete: (e) => {
-                if (this.state.phoneOpen) {
-                  e.target.style.height = 'auto';
-                }
-              },
-              ease: 'easeInOutQuad',
-            } : null}
+            animation={
+              isMobile
+                ? {
+                    height: 0,
+                    duration: 300,
+                    onComplete: (e) => {
+                      if (this.state.phoneOpen) {
+                        e.target.style.height = 'auto';
+                      }
+                    },
+                    ease: 'easeInOutQuad',
+                  }
+                : null
+            }
             moment={moment}
             reverse={!!phoneOpen}
             /* replace-start */
             data-edit="LinkMenu"
-          /* replace-end */
+            /* replace-end */
           >
             {navChildren}
           </TweenOne>

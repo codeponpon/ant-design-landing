@@ -22,16 +22,18 @@ class MenuEditView extends React.PureComponent {
   onAdd = (ids, currentData) => {
     const newData = deepCopy(currentData.children[currentData.children.length - 1]);
     delete newData.delete;
-    newData.name = `${newData.name.split('~')[0].replace(/[0-9]/ig, '')}~${getRandomKey()}`;
+    newData.name = `${newData.name.split('~')[0].replace(/[0-9]/gi, '')}~${getRandomKey()}`;
     currentData.children.push(newData);
 
     const { dispatch, templateData } = this.props;
-    dispatch(actions.changeChild({
-      templateData,
-      ids,
-      currentData,
-    }));
-  }
+    dispatch(
+      actions.changeChild({
+        templateData,
+        ids,
+        currentData,
+      }),
+    );
+  };
 
   onSlideDelete = (e, ids, currentData) => {
     const children = currentData.children;
@@ -41,22 +43,26 @@ class MenuEditView extends React.PureComponent {
     /* currentData.children = currentData.children
       .map(node => (node === e ? { ...node, delete: true } : node)); */
     const { dispatch, templateData } = this.props;
-    dispatch(actions.changeChild({
-      templateData,
-      ids,
-      currentData,
-    }));
-  }
+    dispatch(
+      actions.changeChild({
+        templateData,
+        ids,
+        currentData,
+      }),
+    );
+  };
 
   onValueChange = (e, i, key, ids, currentData) => {
     currentData.children[i][key] = e;
     const { dispatch, templateData } = this.props;
-    dispatch(actions.changeChild({
-      templateData,
-      ids,
-      currentData,
-    }));
-  }
+    dispatch(
+      actions.changeChild({
+        templateData,
+        ids,
+        currentData,
+      }),
+    );
+  };
 
   onListChange = (e, ids, currentData) => {
     currentData.children = e.map((item) => {
@@ -65,82 +71,96 @@ class MenuEditView extends React.PureComponent {
       })[0];
     });
     const { dispatch, templateData } = this.props;
-    dispatch(actions.changeChild({
-      templateData,
-      ids,
-      currentData,
-    }));
-  }
+    dispatch(
+      actions.changeChild({
+        templateData,
+        ids,
+        currentData,
+      }),
+    );
+  };
 
   render() {
     const { currentEditData, templateData } = this.props;
-    const { ids, currentEditTemplateData } = getIdsAndCurrentData(currentEditData, templateData, 'LinkMenu');
+    const { ids, currentEditTemplateData } = getIdsAndCurrentData(
+      currentEditData,
+      templateData,
+      'LinkMenu',
+    );
     if (!currentEditTemplateData.children) {
       return null;
     }
-    const templateIds = templateData.data.template;// .filter(key => !key.match(/Nav|Footer/ig));
-    const childrenToRender = currentEditTemplateData.children.filter((c) => c && !c.delete).map((item, i) => {
-      // 只给 link 使用
-      return (
-        <div key={item.name} className="sort-manage">
-          <div className="sort-manage-name">
-            <Input
-              defaultValue={item.children}
-              onChange={(e) => {
-                this.onValueChange(e.target.value, i, 'children', ids, currentEditTemplateData);
-              }}
-            />
-          </div>
-          <div className="sort-manage-delete">
-            <Popover
-              placement="bottomRight"
-              title={<FormattedMessage id="app.state.menu.edit.link.header" />}
-              content={(
-                <div>
-                  <Row>
-                    <Col span={8}>
-                      <FormattedMessage id="app.state.link.url" />
-                    </Col>
-                    <Col span={16}>
-                      <Input
-                        onChange={(e) => {
-                          this.onValueChange(e.target.value, i, 'to', ids, currentEditTemplateData);
-                        }}
-                        defaultValue={item.to}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-              )}
-              trigger="click"
-            >
+    const templateIds = templateData.data.template; // .filter(key => !key.match(/Nav|Footer/ig));
+    const childrenToRender = currentEditTemplateData.children
+      .filter((c) => c && !c.delete)
+      .map((item, i) => {
+        // 只给 link 使用
+        return (
+          <div key={item.name} className="sort-manage">
+            <div className="sort-manage-name">
+              <Input
+                defaultValue={item.children}
+                onChange={(e) => {
+                  this.onValueChange(e.target.value, i, 'children', ids, currentEditTemplateData);
+                }}
+                disabled={item.disabled}
+              />
+            </div>
+            <div className="sort-manage-delete">
+              <Popover
+                placement="bottomRight"
+                title={<FormattedMessage id="app.state.menu.edit.link.header" />}
+                content={
+                  <div>
+                    <Row>
+                      <Col span={8}>
+                        <FormattedMessage id="app.state.link.url" />
+                      </Col>
+                      <Col span={16}>
+                        <Input
+                          onChange={(e) => {
+                            this.onValueChange(
+                              e.target.value,
+                              i,
+                              'to',
+                              ids,
+                              currentEditTemplateData,
+                            );
+                          }}
+                          defaultValue={item.to}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
+                }
+                trigger="click"
+              >
+                <Button
+                  size="small"
+                  shape="circle"
+                  icon={<LinkOutlined />}
+                  disabled={item.disabled}
+                />
+              </Popover>
+            </div>
+            <div className="sort-manage-delete">
               <Button
+                onClick={() => {
+                  this.onSlideDelete(item, ids, currentEditTemplateData);
+                }}
                 size="small"
                 shape="circle"
-                icon={<LinkOutlined />}
+                icon={<DeleteOutlined />}
+                disabled={currentEditTemplateData.children.length === 1 || item.disabled}
               />
-            </Popover>
+            </div>
           </div>
-          <div className="sort-manage-delete">
-            <Button
-              onClick={() => {
-                this.onSlideDelete(item, ids, currentEditTemplateData);
-              }}
-              size="small"
-              shape="circle"
-              icon={<DeleteOutlined />}
-              disabled={currentEditTemplateData.children.length === 1}
-            />
-          </div>
-        </div>
-      );
-    });
+        );
+      });
     return (
       <div>
         <div style={{ marginBottom: 16 }}>
-          <ExclamationCircleOutlined />
-          {' '}
-          <FormattedMessage id="app.state.menu.type-link.remark" />
+          <ExclamationCircleOutlined /> <FormattedMessage id="app.state.menu.type-link.remark" />
           <br />
           <FormattedMessage id="app.state.menu.type-link.current" />
           <br />
@@ -150,11 +170,11 @@ class MenuEditView extends React.PureComponent {
           dragClassName="list-drag-selected"
           className="sort-manage-list"
           key="list"
-          dragElement={(
+          dragElement={
             <div className="sort-manage-icon">
               <BarsOutlined />
             </div>
-          )}
+          }
           onChange={(e) => {
             this.onListChange(e, ids, currentEditTemplateData);
           }}
