@@ -1,179 +1,178 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import TweenOne from 'rc-tween-one';
 import { Link } from 'rc-scroll-anim';
 /* replace-start */
-import { polyfill } from 'react-lifecycles-compat';
+// import { polyfill } from 'react-lifecycles-compat';
 import './index.less';
 /* replace-end */
-import { DrawerForm } from '@ant-design/pro-form';
-import { message } from 'antd';
+import { Drawer } from 'antd';
+import { LoadingOutlined, SettingOutlined } from '@ant-design/icons';
+import LoginComp from '../components/loginComp';
+import RegisterComp from '../components/registerComp';
+import { AccountComp } from '../components/accountComp';
+import { getCredit } from '../libs/credit';
 
-class Header extends React.Component {
-  formRef = React.createRef();
-
-  /* replace-start */
-  static getDerivedStateFromProps(props, { prevProps }) {
-    const { func } = props;
-    const nextState = {
-      prevProps: props,
+const Header = (attrs) => {
+  const { user, balance, loading, loadingWallet, CheckBalance } = getCredit();
+  const [loginVisible, setLoginVisible] = useState(false);
+  const [registerVisible, setRegisterVisible] = useState(false);
+  const [phoneOpen, setPhoneOpen] = useState(false);
+  const [accountVisible, setAccountVisible] = useState(false);
+  const { dataSource, isMobile, ...props } = attrs;
+  const { LinkMenu } = dataSource;
+  const navData = LinkMenu.children;
+  const navChildren = Object.keys(navData).map((key, i) => {
+    const { drawer, ...item } = navData[key];
+    let tag = Link;
+    let menu = Link;
+    let tagProps = {
+      /* replace-start */
+      'data-edit': 'LinkMenu',
+      /* replace-end */
     };
-    if (prevProps && props !== prevProps && func) {
-      nextState.phoneOpen = func.open;
+    if (item.to && item.to.match(/\//g)) {
+      tagProps.href = item.to;
+      tag = 'a';
+      delete item.to;
     }
-    return nextState;
-  }
 
-  /* replace-end */
-  constructor(props) {
-    super(props);
-    this.state = {
-      phoneOpen: false,
-    };
-  }
-
-  phoneClick = () => {
-    const phoneOpen = !this.state.phoneOpen;
-    this.setState({
-      phoneOpen,
-    });
-  };
-
-  waitTime = (time = 100) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true);
-      }, time);
-    });
-  };
-
-  render() {
-    const { dataSource, isMobile, ...props } = this.props;
-
-    const { phoneOpen } = this.state;
-    const { LinkMenu } = dataSource;
-    const navData = LinkMenu.children;
-    const navChildren = Object.keys(navData).map((key, i) => {
-      const { drawer, disabled, ...item } = navData[key];
-      let tag = Link;
-      let tagProps = {
-        /* replace-start */
-        'data-edit': 'LinkMenu',
-        /* replace-end */
-      };
-      if (item.to && item.to.match(/\//g)) {
-        tagProps.href = item.to;
-        tag = 'a';
-        delete item.to;
-      }
-      if (drawer) {
-        tag = DrawerForm;
-        tagProps = {
-          width: isMobile ? '100%' : '400px',
-          title: 'Main Title',
-          formRef: this.formRef,
-          trigger: <Link to={item.to}>{navData[key].children}</Link>,
-          drawerProps: { forceRender: true, destroyOnClose: true },
-          onFinish: async (values) => {
-            await this.waitTime(2000);
-            console.log(values.name);
-            message.success('Submitted successfully');
-            // do not close the popup
-            return true;
-          },
-        };
-        return (
-          <div {...item} key={i.toString()}>
-            <DrawerForm {...tagProps}>
-              <DrawerForm
-                title="Sub Title"
-                formRef={this.formRef}
-                trigger={<Link>Sub Content</Link>}
-                drawerProps={{
-                  forceRender: true,
-                  destroyOnClose: true,
-                }}
-                onFinish={async (values) => {
-                  await this.waitTime(2000);
-                  console.log(values.name);
-                  message.success('Submitted successfully');
-                  // do not close the popup
-                  return true;
-                }}
-                width={isMobile ? '100%' : '400px'}
-              />
-            </DrawerForm>
-          </div>
+    if (drawer) {
+      if (item.to === 'login') {
+        if (!loading && user) {
+          return (
+            <span {...item} key={i.toString()}>
+              Credit: {loadingWallet ? <LoadingOutlined /> : balance} ฿
+            </span>
+          );
+        }
+        menu = React.createElement(
+          Link,
+          { onClick: () => setLoginVisible(true) },
+          navData[key].children,
         );
+        tag = <LoginComp isMobile={isMobile} />;
+        tagProps = {
+          title: 'สมาชิกเข้าสู่ระบบ',
+          visible: loginVisible,
+          onClose: () => setLoginVisible(false),
+        };
+      } else if (item.to === 'register') {
+        if (!loading && user) {
+          menu = (
+            <a href="#" onClick={() => setAccountVisible(true)}>
+              <SettingOutlined />
+            </a>
+          );
+          tag = (
+            <AccountComp
+              user={user}
+              balance={balance}
+              loading={loading}
+              loadingWallet={loadingWallet}
+              CheckBalance={CheckBalance}
+            />
+          );
+          tagProps = {
+            title: 'ข้อมูลบัญชี',
+            visible: accountVisible,
+            onClose: () => setAccountVisible(false),
+          };
+        } else {
+          menu = React.createElement(
+            Link,
+            { onClick: () => setRegisterVisible(true) },
+            navData[key].children,
+          );
+          tag = <RegisterComp isMobile={isMobile} />;
+          tagProps = {
+            title: 'สมัครสมาชิก',
+            visible: registerVisible,
+            onClose: () => setRegisterVisible(false),
+          };
+        }
       }
-
       return React.createElement(
-        tag,
-        { ...item, ...tagProps, key: i.toString() },
-        /* replace-start-value = navData[key].children */
-        React.createElement('span', { dangerouslySetInnerHTML: { __html: navData[key].children } }),
-        /* replace-end-value */
+        'div',
+        { className: item.className, name: item.name, dataEdit: 'LinkMenu', key: i.toString() },
+        <>
+          {menu}
+          <Drawer width={isMobile ? '100%' : '400px'} {...tagProps}>
+            {tag}
+          </Drawer>
+        </>,
       );
-    });
-    const moment = phoneOpen === undefined ? 300 : null;
-    return (
-      <TweenOne
-        component="header"
-        animation={{ opacity: 0, type: 'from' }}
-        {...dataSource.wrapper}
-        {...props}
+    }
+
+    if (drawer) return;
+
+    return React.createElement(
+      tag,
+      { ...item, ...tagProps, key: i.toString() },
+      /* replace-start-value = navData[key].children */
+      React.createElement('span', { dangerouslySetInnerHTML: { __html: navData[key].children } }),
+      /* replace-end-value */
+    );
+  });
+
+  const moment = phoneOpen === undefined ? 300 : null;
+
+  return (
+    <TweenOne
+      component="header"
+      animation={{ opacity: 0, type: 'from' }}
+      {...dataSource.wrapper}
+      {...props}
+    >
+      <div
+        {...dataSource.page}
+        className={`${dataSource.page.className}${phoneOpen ? ' open' : ''}`}
       >
-        <div
-          {...dataSource.page}
-          className={`${dataSource.page.className}${phoneOpen ? ' open' : ''}`}
-        >
-          <TweenOne animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }} {...dataSource.logo}>
-            <img width="100%" src={dataSource.logo.children} alt="img" />
-          </TweenOne>
-          {isMobile && (
-            <div
-              {...dataSource.mobileMenu}
-              onClick={() => {
-                this.phoneClick();
-              }}
-              /* replace-start */
-              data-edit="LinkMenu"
-              /* replace-end */
-            >
-              <em />
-              <em />
-              <em />
-            </div>
-          )}
-          <TweenOne
-            {...LinkMenu}
-            animation={
-              isMobile
-                ? {
-                    height: 0,
-                    duration: 300,
-                    onComplete: (e) => {
-                      if (this.state.phoneOpen) {
-                        e.target.style.height = 'auto';
-                      }
-                    },
-                    ease: 'easeInOutQuad',
-                  }
-                : null
-            }
-            moment={moment}
-            reverse={!!phoneOpen}
+        <TweenOne animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }} {...dataSource.logo}>
+          <img width="100%" src={dataSource.logo.children} alt="img" />
+        </TweenOne>
+        {isMobile && (
+          <div
+            {...dataSource.mobileMenu}
+            onClick={() => setPhoneOpen(!phoneOpen)}
             /* replace-start */
             data-edit="LinkMenu"
             /* replace-end */
           >
-            {navChildren}
-          </TweenOne>
-        </div>
-      </TweenOne>
-    );
-  }
-}
+            <em />
+            <em />
+            <em />
+          </div>
+        )}
+        <TweenOne
+          {...LinkMenu}
+          animation={
+            isMobile
+              ? {
+                  height: 0,
+                  duration: 300,
+                  onComplete: (e) => {
+                    if (phoneOpen) {
+                      e.target.style.height = 'auto';
+                    }
+                  },
+                  ease: 'easeInOutQuad',
+                }
+              : null
+          }
+          moment={moment}
+          reverse={!!phoneOpen}
+          /* replace-start */
+          data-edit="LinkMenu"
+          /* replace-end */
+        >
+          {navChildren}
+        </TweenOne>
+      </div>
+    </TweenOne>
+  );
+};
 
 /* replace-start-value = export default Header */
-export default polyfill(Header);
+export default Header;
 /* replace-end-value */

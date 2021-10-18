@@ -61,14 +61,14 @@
     classnames "^2.2.6"
     rc-util "^5.9.4"
 
-"@ant-design/pro-field@1.22.5":
-  version "1.22.5"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-field/-/pro-field-1.22.5.tgz#47bc98eb4f1c42cbcd411559317814da3621457e"
-  integrity sha512-PLLuhnkn9LTnn39IPbd/+Aby88PfQu+xfiMriNR7I1v1795kHw3qj1no113RYXziV+uX67r6waeULPqxYiKAIA==
+"@ant-design/pro-field@1.22.7":
+  version "1.22.7"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-field/-/pro-field-1.22.7.tgz#184483bfd66da0806b30da19b610ce9d55411811"
+  integrity sha512-WCXsMOf/2bIgHsj3hK3MHRUzux2BJZEYrKeYp8HOa/C7TtOliNsrdxaCtREzc7ZOBI2DsE7w0ECCgEjDk3f7HQ==
   dependencies:
     "@ant-design/icons" "^4.2.1"
     "@ant-design/pro-provider" "1.4.19"
-    "@ant-design/pro-utils" "1.24.6"
+    "@ant-design/pro-utils" "1.24.7"
     classnames "^2.2.6"
     lodash.tonumber "^4.0.3"
     moment "^2.27.0"
@@ -77,15 +77,15 @@
     react-color "2.19.3"
     swr "^1.1.0-beta.0"
 
-"@ant-design/pro-form@1.42.0":
-  version "1.42.0"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-form/-/pro-form-1.42.0.tgz#89f6c1c889efc6156c5978ca0d26abb4b93f267d"
-  integrity sha512-f9CAtF65VbxUyxHSEeJEixdGA4hBr47b7uL88Cgey6f10Ks9zrjCkoRG1CP+hK9B0Ws19K0NOBIRs+H5Z5msSA==
+"@ant-design/pro-form@^1.43.2":
+  version "1.43.2"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-form/-/pro-form-1.43.2.tgz#0e51d99a8946d427808f2af50d72088e624487cd"
+  integrity sha512-smTN8hhzR3OW5BC5kQuIj/78yeVOb3qWVcia3c5JLal74JZWofSjLR29soP6Q+HhMunjWS/t/wEwkkl1i21DqA==
   dependencies:
     "@ant-design/icons" "^4.2.1"
-    "@ant-design/pro-field" "1.22.5"
+    "@ant-design/pro-field" "1.22.7"
     "@ant-design/pro-provider" "1.4.19"
-    "@ant-design/pro-utils" "1.24.6"
+    "@ant-design/pro-utils" "1.24.7"
     "@umijs/use-params" "^1.0.2"
     classnames "^2.2.6"
     lodash.merge "^4.6.2"
@@ -101,10 +101,10 @@
   dependencies:
     rc-util "^5.0.1"
 
-"@ant-design/pro-utils@1.24.6":
-  version "1.24.6"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-utils/-/pro-utils-1.24.6.tgz#a04cf9f57804970610fe1a9a3845c1cb111198b2"
-  integrity sha512-/MBuTFyrEyKEnVBGnoUpB6yqLu2slW5MsyVm0eGX28TS3u/19/+JjV2Fxo/pxFOeEg6uasz8nOzru9f/CuJRUw==
+"@ant-design/pro-utils@1.24.7":
+  version "1.24.7"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-utils/-/pro-utils-1.24.7.tgz#db4ca35d2294df53e1b4f2b4eb33110f874e7bab"
+  integrity sha512-P3xIeTTN4NLxmkgiIO2Y+4g4xDMS5DpERjVYLr4UAhL3UUllpy/ZqvHSr7MVnaVIMA8LSA2zYp0os7hZVWSLYQ==
   dependencies:
     "@ant-design/icons" "^4.3.0"
     "@ant-design/pro-provider" "1.4.19"

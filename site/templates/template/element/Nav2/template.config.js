@@ -38,6 +38,12 @@ export default {
           disabled: true,
           drawer: true,
         },
+        {
+          name: 'linkNav',
+          to: 'The ID address of the current page, See above',
+          children: 'About',
+          className: 'menu-item',
+        },
       ],
     },
     mobileMenu: {

@@ -10,8 +10,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@ant-design/pro-form": "1.42.0",
     "@ant-design/compatible": "^1.0.1",
+    "@ant-design/pro-form": "^1.43.2",
     "antd": "^4.0.1",
     "autoresponsive-react": "^1.1.31",
     "deep-eql": "^4.0.0",
