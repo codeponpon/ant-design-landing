@@ -39,7 +39,8 @@
       transition: color .3s @ease-in-out, border .3s @ease-in-out;
       &.active,
       &:hover {
-        color: @primary-color;
+        color: @template-text-color-light;
+        background-color: @primary-color;
         border-bottom: 2px solid @primary-color;
       }
     }
@@ -119,4 +120,9 @@
       }
     }
   }
+}
+
+.ant-drawer-left.ant-drawer-open,
+.ant-drawer-right.ant-drawer-open {
+  z-index: 9999;
 }

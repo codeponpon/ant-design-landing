@@ -23,9 +23,25 @@ export default {
       className: 'header2-menu',
       children: [
         {
+          name: 'linkNav~login',
+          to: 'login',
+          children: 'Login',
+          className: 'menu-item',
+          disabled: true,
+          drawer: true,
+        },
+        {
+          name: 'linkNav~register',
+          to: 'register',
+          children: 'Register',
+          className: 'menu-item',
+          disabled: true,
+          drawer: true,
+        },
+        {
           name: 'linkNav',
-          to: '当前页面 ID 地址，参考如上',
-          children: '导航名称',
+          to: 'The ID address of the current page, See above',
+          children: 'About',
           className: 'menu-item',
         },
       ],
