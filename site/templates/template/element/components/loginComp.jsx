@@ -1,13 +1,15 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
-import { message, Input } from 'antd';
-import { LoginForm } from '@ant-design/pro-form';
+import { Form, message, Space, Drawer, Input, Button } from 'antd';
 import { LockOutlined, MobileOutlined } from '@ant-design/icons';
+import { Link } from 'rc-scroll-anim';
+import RegisterComp from './registerComp';
 import waitTime from '../libs/waitTime';
 
-const LoginComp = () => {
+const LoginComp = (props) => {
+  const { isMobile, registerHistory = false } = props;
   const [loading, setLoading] = useState(false);
+  const [registerChildrenDrawer, setRegisterChildrenDrawer] = useState(false);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -17,48 +19,30 @@ const LoginComp = () => {
   };
 
   return (
-    <LoginForm
-      logo=""
-      title="เข้าสู่ระบบ"
-      subTitle=" "
-      submitter={{
-        // Configure the button text
-        searchConfig: {
-          submitText: 'เข้าสู่ระบบ',
-        },
-        // Configure the properties of the button
-        resetButtonProps: {
-          style: {
-            // Hide the reset button
-            display: 'none',
-          },
-        },
-        submitButtonProps: {
-          className: 'ant-btn-lg',
-          style: { width: '312px' },
-        },
-      }}
-      onFinish={onFinish}
-    >
-      {' '}
-      <Input
+    <Form initialValues={{ remember: true }} onFinish={onFinish}>
+      <div className="ant-pro-form-login-top" style={{ marginBottom: '20px' }}>
+        <div className="ant-pro-form-login-header">
+          <span className="ant-pro-form-login-title">เข้าสู่ระบบ</span>
+        </div>
+      </div>
+      <Form.Item
         name="mobile"
-        size="large"
-        prefix={<MobileOutlined className="prefixIcon" />}
-        placeholder="เบอร์โทรศัพท์"
-        style={{ marginBottom: '24px' }}
         rules={[
           {
             required: true,
             message: 'กรุณากรอกเบอร์โทรศัพท์!',
           },
         ]}
-      />
-      <Input.Password
+        style={{ marginBottom: '24px' }}
+      >
+        <Input
+          size="large"
+          prefix={<MobileOutlined className="prefixIcon" />}
+          placeholder="เบอร์โทรศัพท์"
+        />
+      </Form.Item>
+      <Form.Item
         name="password"
-        size="large"
-        prefix={<LockOutlined className="prefixIcon" />}
-        placeholder="รหัสผ่าน"
         style={{ marginBottom: '24px' }}
         rules={[
           {
@@ -66,8 +50,33 @@ const LoginComp = () => {
             message: 'กรุณากรอกรหัสผ่าน!',
           },
         ]}
-      />
-    </LoginForm>
+      >
+        <Input.Password
+          size="large"
+          prefix={<LockOutlined className="prefixIcon" />}
+          placeholder="รหัสผ่าน"
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="login-form-button" size="large" block>
+          เข้าสู่ระบบ
+        </Button>{' '}
+        {!registerHistory && (
+          <Space style={{ marginTop: '20px' }}>
+            ยังไม่ได้เป็นสมาชิก?{' '}
+            <Link onClick={() => setRegisterChildrenDrawer(true)}>สมัครสมาชิก</Link>
+            <Drawer
+              title="สมัครสมาชิก"
+              width={isMobile ? '100%' : '400px'}
+              onClose={() => setRegisterChildrenDrawer(false)}
+              visible={registerChildrenDrawer}
+            >
+              <RegisterComp loginHistory />
+            </Drawer>
+          </Space>
+        )}
+      </Form.Item>
+    </Form>
   );
 };
 

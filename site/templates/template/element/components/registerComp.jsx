@@ -52,7 +52,7 @@ const RegisterComp = (props) => {
         }}
         onFinish={onFinish}
       >
-        <div className="ant-pro-form-login-top">
+        <div className="ant-pro-form-login-top" style={{ marginBottom: '20px' }}>
           <div className="ant-pro-form-login-header">
             <span className="ant-pro-form-login-title">สมัครสมาชิก</span>
           </div>
