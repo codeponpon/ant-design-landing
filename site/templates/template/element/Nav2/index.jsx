@@ -51,7 +51,7 @@ const Header = (attrs) => {
           { onClick: () => setLoginVisible(true) },
           navData[key].children,
         );
-        tag = <LoginComp isMobile={isMobile} />;
+        tag = <LoginComp isMobile={isMobile} zIndex="10000" />;
         tagProps = {
           title: 'สมาชิกเข้าสู่ระบบ',
           visible: loginVisible,
@@ -84,7 +84,7 @@ const Header = (attrs) => {
             { onClick: () => setRegisterVisible(true) },
             navData[key].children,
           );
-          tag = <RegisterComp isMobile={isMobile} />;
+          tag = <RegisterComp isMobile={isMobile} zIndex="10000" />;
           tagProps = {
             title: 'สมัครสมาชิก',
             visible: registerVisible,
@@ -97,7 +97,7 @@ const Header = (attrs) => {
         { className: item.className, name: item.name, dataEdit: 'LinkMenu', key: i.toString() },
         <>
           {menu}
-          <Drawer width={isMobile ? '100%' : '400px'} {...tagProps}>
+          <Drawer width={isMobile ? '100%' : '400px'} {...tagProps} zIndex="9999">
             {tag}
           </Drawer>
         </>,

@@ -13,7 +13,7 @@ import { Link } from 'rc-scroll-anim';
 import LoginComp from './loginComp';
 
 const RegisterComp = (props) => {
-  const { isMobile, loginHistory = false } = props;
+  const { isMobile, loginHistory = false, ...attrs } = props;
   const [loginChildrenDrawer, setLoginChildrenDrawer] = useState(false);
 
   const onFinish = async (values) => {
@@ -165,6 +165,7 @@ const RegisterComp = (props) => {
             width={isMobile ? '100%' : '400px'}
             onClose={() => setLoginChildrenDrawer(false)}
             visible={loginChildrenDrawer}
+            {...attrs}
           >
             <LoginComp registerHistory />
           </Drawer>

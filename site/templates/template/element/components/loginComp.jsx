@@ -7,7 +7,7 @@ import RegisterComp from './registerComp';
 import waitTime from '../libs/waitTime';
 
 const LoginComp = (props) => {
-  const { isMobile, registerHistory = false } = props;
+  const { isMobile, registerHistory = false, ...attrs } = props;
   const [loading, setLoading] = useState(false);
   const [registerChildrenDrawer, setRegisterChildrenDrawer] = useState(false);
 
@@ -70,6 +70,7 @@ const LoginComp = (props) => {
               width={isMobile ? '100%' : '400px'}
               onClose={() => setRegisterChildrenDrawer(false)}
               visible={registerChildrenDrawer}
+              {...attrs}
             >
               <RegisterComp loginHistory />
             </Drawer>
