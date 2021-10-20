@@ -60,9 +60,9 @@ const Header = (attrs) => {
       } else if (item.to === 'register') {
         if (!loading && user) {
           menu = (
-            <a href="#" onClick={() => setAccountVisible(true)}>
+            <Link href="#" onClick={() => setAccountVisible(true)}>
               <SettingOutlined />
-            </a>
+            </Link>
           );
           tag = (
             <AccountComp
