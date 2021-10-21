@@ -97,7 +97,7 @@ const Header = (attrs) => {
         { className: item.className, name: item.name, dataEdit: 'LinkMenu', key: i.toString() },
         <>
           {menu}
-          <Drawer width={isMobile ? '100%' : '400px'} {...tagProps} zIndex="9999">
+          <Drawer width={isMobile ? '100%' : '400px'} {...tagProps}>
             {tag}
           </Drawer>
         </>,
