@@ -51,7 +51,7 @@ const Header = (attrs) => {
           { onClick: () => setLoginVisible(true) },
           navData[key].children,
         );
-        tag = <LoginComp isMobile={isMobile} zIndex="10000" />;
+        tag = <LoginComp isMobile={isMobile} />;
         tagProps = {
           title: 'สมาชิกเข้าสู่ระบบ',
           visible: loginVisible,
@@ -84,7 +84,7 @@ const Header = (attrs) => {
             { onClick: () => setRegisterVisible(true) },
             navData[key].children,
           );
-          tag = <RegisterComp isMobile={isMobile} zIndex="10000" />;
+          tag = <RegisterComp isMobile={isMobile} />;
           tagProps = {
             title: 'สมัครสมาชิก',
             visible: registerVisible,
