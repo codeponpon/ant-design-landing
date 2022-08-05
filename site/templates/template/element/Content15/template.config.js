@@ -43,7 +43,7 @@ export default {
               children: 'ผู้ให้บริการ',
               className: 'content15-tag-name',
             },
-            icon: { children: 'mobile' },
+            icon: { children: 'appstore' },
           },
           content: {
             className: 'content15-content',

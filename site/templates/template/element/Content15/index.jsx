@@ -111,15 +111,7 @@ class Content15 extends React.Component {
     delete props.isMobile;
     const tabsChildren = dataSource.block.children.map(this.getBlockChildren);
     return (
-      <div
-        {...props}
-        {...dataSource.wrapper}
-        /* replace-start */
-        data-comp={[
-          `tabs-switch={ "current": ${this.state.current}, "total": ${dataSource.block.children.length} ,"childRoute": ["block"] }`,
-        ]}
-        /* replace-end */
-      >
+      <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
           <div
             {...dataSource.titleWrapper}
