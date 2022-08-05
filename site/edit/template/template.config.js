@@ -252,6 +252,12 @@ export default {
         textEn: 'Casino',
         uid: 9,
       },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'สล๊อต',
+        textEn: 'Slot',
+        uid: 10,
+      },
     ],
   },
   Pricing: {
