@@ -93,7 +93,7 @@ class PublishModal extends React.Component {
   };
 
   componentDidMount() {
-    // 监听有没有在发布
+    // The listener is not posting
     const { templateData } = this.props;
     const currentBuild = store.get(buildId);
     if (currentBuild && currentBuild[templateData.uid]) {
@@ -179,7 +179,7 @@ class PublishModal extends React.Component {
                     </p>
                   ),
                 });
-                console.log('当前生成的 URL:', url);
+                console.log('The currently generated URL:', url);
                 this.publishEnd();
                 break;
               case 'ERROR':
@@ -254,7 +254,7 @@ class PublishModal extends React.Component {
             if (error) {
               console.error('Error:', error.message);
             }
-            // 记录发布状态；
+            // Record the release status;
             const currentBuild = store.get(buildId) || {};
             currentBuild[templateData.uid] = id;
             store.set(buildId, currentBuild);

@@ -192,7 +192,7 @@ class NavController extends React.PureComponent {
         name: <FormattedMessage id="app.header.download" key="m" />,
         icon: downloadLoad ? <LoadingOutlined /> : <CodeOutlined />,
         onClick: downloadLoad ? null : this.onSaveCode,
-        display: 'none',
+        display: 'inline-block',
       },
       {
         name: <FormattedMessage id="app.header.publish-cloud" key="m" />,

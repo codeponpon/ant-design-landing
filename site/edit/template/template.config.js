@@ -168,6 +168,12 @@ export default {
         textEn: 'No Text',
         uid: 12,
       },
+      {
+        src: 'https://gw.alipayobjects.com/zos/rmsportal/OmIIrSdGdZIhUBREQrFT.jpg',
+        text: 'Providers',
+        textEn: 'Providers',
+        uid: 14,
+      },
     ],
   },
   Contact: {
@@ -239,6 +245,12 @@ export default {
         text: 'Process',
         textEn: 'Process',
         uid: 8,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'คาสิโน',
+        textEn: 'Casino',
+        uid: 9,
       },
     ],
   },
