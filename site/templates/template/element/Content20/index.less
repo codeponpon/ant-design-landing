@@ -1,0 +1,127 @@
+@import '../../../static/custom.less';
+@content20: content20;
+.@{content20}-wrapper {
+  .@{content20} {
+    > h1,
+    > p {
+      text-align: center;
+    }
+    &-tag {
+      & i {
+        display: inline-block;
+        width: 12px;
+        height: 14px;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+      &-name {
+        display: inline-block;
+      }
+    }
+    .ant-tabs-bar {
+      text-align: center;
+    }
+    .ant-tabs {
+      .ant-tabs-nav {
+        float: none;
+        text-align: center;
+      }
+    }
+    &-tabs-wrapper {
+      position: relative;
+      margin-top: 24px;
+    }
+    &-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &-text {
+      padding: 24px 48px;
+    }
+    &-img {
+      padding: 24px 48px;
+    }
+    .ant-tabs-tabpane {
+      margin-top: 40px;
+    }
+    &-img-wrapper {
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      .block {
+        margin-bottom: 24px;
+        .@{content20}-block-content {
+          position: relative;
+          display: block;
+          padding: 10px;
+          overflow: hidden;
+          color: @text-color;
+          text-align: center;
+          background: #fff;
+          border: none;
+          border-radius: 4px;
+          transition: box-shadow 0.3s @ease-out, transform 0.3s @ease-out;
+          .page-pro();
+          & > span {
+            display: block;
+            width: 100%;
+            height: 160px;
+            padding: 5%;
+            background: @line-color;
+          }
+          & p {
+            width: 100%;
+            line-height: 30px;
+          }
+          &:hover {
+            & p {
+              bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .@{content20}-wrapper {
+    min-height: 980px;
+    overflow: hidden;
+    .@{content20} {
+      max-width: 100%;
+      &-content {
+        display: block;
+      }
+      &-text,
+      &-img {
+        padding: 0;
+        text-align: left;
+      }
+      &-img {
+        margin-top: 32px;
+      }
+      .ant-tabs-bar {
+        width: auto;
+        .ant-tabs-nav {
+          float: left;
+        }
+      }
+      ul {
+        li {
+          display: block;
+          width: 100%;
+          padding: 2%;
+          span {
+            height: 168px;
+          }
+          p {
+            position: relative;
+            bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

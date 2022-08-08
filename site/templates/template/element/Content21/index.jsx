@@ -12,7 +12,7 @@ import GamblingCategory from '../components/GamblingCategory';
 
 const TabPane = Tabs.TabPane;
 
-class Content18 extends React.Component {
+class Content21 extends React.Component {
   /* replace-start */
   static getDerivedStateFromProps(props, { prevProps, current: prevCurrent }) {
     const { func } = props;
@@ -95,7 +95,7 @@ class Content18 extends React.Component {
             data-edit="Row"
             /* replace-end */
           >
-            <GamblingCategory name="ยิงปลา" block="content18" columns={3} />
+            <GamblingCategory name="สล็อตยอดนิยม" block="content21" columns={3} />
           </Row>
         )}
       </TabPane>
@@ -134,6 +134,6 @@ class Content18 extends React.Component {
   }
 }
 
-/* replace-start-value = export default Content18 */
-export default polyfill(Content18);
+/* replace-start-value = export default Content21 */
+export default polyfill(Content21);
 /* replace-end-value */

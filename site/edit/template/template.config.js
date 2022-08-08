@@ -380,6 +380,42 @@ export default {
         textEn: 'Hot',
         uid: 5,
       },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'คาสิโนยอดนิยม',
+        textEn: 'HotCasino',
+        uid: 6,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'สล็อตยอดนิยม',
+        textEn: 'HotSlot',
+        uid: 7,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'กีฬายอดนิยม',
+        textEn: 'HotSport',
+        uid: 8,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'เกมส์ที่แจ๊คพ็อตแตกบ่อย',
+        textEn: 'Jackpot',
+        uid: 9,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'เกมส์ยอดนิยม',
+        textEn: 'Popular',
+        uid: 10,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'หวย',
+        textEn: 'Huay',
+        uid: 11,
+      },
     ],
   },
 };
