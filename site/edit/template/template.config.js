@@ -362,6 +362,12 @@ export default {
         textEn: 'Slot',
         uid: 2,
       },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'กีฬา',
+        textEn: 'Sport',
+        uid: 3,
+      },
     ],
   },
 };
