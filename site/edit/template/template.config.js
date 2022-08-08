@@ -368,6 +368,18 @@ export default {
         textEn: 'Sport',
         uid: 3,
       },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'ยิงปลา',
+        textEn: 'Fishing',
+        uid: 4,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'ฮอตฮิต',
+        textEn: 'Hot',
+        uid: 5,
+      },
     ],
   },
 };

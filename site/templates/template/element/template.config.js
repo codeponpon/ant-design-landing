@@ -28,6 +28,8 @@ import Content14 from './Content14/template.config';
 import Content15 from './Content15/template.config';
 import Content16 from './Content16/template.config';
 import Content17 from './Content17/template.config';
+import Content18 from './Content18/template.config';
+import Content19 from './Content19/template.config';
 
 import Feature6 from './Feature6/template.config';
 import Feature7 from './Feature7/template.config';
@@ -75,6 +77,8 @@ export default {
   Content15,
   Content16,
   Content17,
+  Content18,
+  Content19,
   Pricing0,
   Pricing1,
   Pricing2,
@@ -97,6 +101,8 @@ export default {
   Gambling1: Content15,
   Gambling2: Content16,
   Gambling3: Content17,
+  Gambling4: Content18,
+  Gambling5: Content19,
   Footer0,
   Footer1,
   Footer2,
