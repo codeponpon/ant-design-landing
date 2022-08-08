@@ -41,13 +41,14 @@ export default {
       children: [
         {
           name: 'title',
-          children: '客户案例',
+          children: 'ผู้ให้บริการเยอะที่สุด',
           className: 'title-h1',
         },
         {
           name: 'content',
           className: 'title-content',
-          children: '在这里用一段话介绍服务的案例情况',
+          children:
+            'เรารวบรวมผู้ให้บริการชั้นนำทั่วทุกมุมโลกมาไว้ให้ที่นี่แล้ว ไม่ว่าจะเป็นคาสิโน, สล๊อต, บาคาร่า, ยิงปลา, กีฬา และอื่นๆ อีกมากมาย',
         },
       ],
     },

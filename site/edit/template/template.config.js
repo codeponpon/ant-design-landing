@@ -168,12 +168,6 @@ export default {
         textEn: 'No Text',
         uid: 12,
       },
-      {
-        src: 'https://gw.alipayobjects.com/zos/rmsportal/OmIIrSdGdZIhUBREQrFT.jpg',
-        text: 'Providers',
-        textEn: 'Providers',
-        uid: 14,
-      },
     ],
   },
   Contact: {
@@ -245,18 +239,6 @@ export default {
         text: 'Process',
         textEn: 'Process',
         uid: 8,
-      },
-      {
-        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
-        text: 'คาสิโน',
-        textEn: 'Casino',
-        uid: 9,
-      },
-      {
-        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
-        text: 'สล๊อต',
-        textEn: 'Slot',
-        uid: 10,
       },
     ],
   },
@@ -355,6 +337,30 @@ export default {
         text: '整屏滚动',
         value: 'full',
         isVideo: true,
+      },
+    ],
+  },
+  Gambling: {
+    name: 'Gambling',
+    order: 4,
+    data: [
+      {
+        src: 'https://gw.alipayobjects.com/zos/rmsportal/OmIIrSdGdZIhUBREQrFT.jpg',
+        text: 'Providers',
+        textEn: 'Providers',
+        uid: 0,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'คาสิโน',
+        textEn: 'Casino',
+        uid: 1,
+      },
+      {
+        src: 'https://zos.alipayobjects.com/rmsportal/sgTBpfjKcsXWDtq.jpg',
+        text: 'สล๊อต',
+        textEn: 'Slot',
+        uid: 2,
       },
     ],
   },
