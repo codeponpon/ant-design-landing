@@ -43,7 +43,7 @@ const ProviderList = () => {
   const getBlock = (data) => ({
     name: data.name,
     className: 'block',
-    md: 4,
+    md: 3,
     xs: 24,
     children: {
       wrapper: {

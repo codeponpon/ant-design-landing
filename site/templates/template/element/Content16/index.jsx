@@ -8,7 +8,7 @@ import { getChildrenToRender } from '../../utils';
 /* replace-start */
 import './index.less';
 /* replace-end */
-import CategorySlot from '../components/categorySlot';
+import GamblingCategory from '../components/GamblingCategory';
 
 const TabPane = Tabs.TabPane;
 
@@ -97,7 +97,7 @@ class Content15 extends React.Component {
             data-edit="Row"
             /* replace-end */
           >
-            <CategorySlot />
+            <GamblingCategory name="สล็อต" block="content16" columns={3} />
           </Row>
         )}
       </TabPane>
