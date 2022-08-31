@@ -63,14 +63,15 @@ class SideMenu extends React.PureComponent {
     Object.keys(webData)
       .sort((a, b) => webData[a].order - webData[b].order)
       .forEach((key) => {
-        if (key !== 'Other') {
+        if (key !== 'Other' && !webData[key]?.disabled) {
           const item = webData[key];
           children.push(
             <div className="title" key={key}>
               {item.name}
             </div>,
           );
-          item.data // .sort((a, b) => (a.order - b.order))
+          item.data
+            .sort((a, b) => a.order - b.order)
             .forEach((child, i) => {
               pushData(child, i, key, item);
             });

@@ -30,14 +30,19 @@ class Banner extends React.PureComponent {
               dataSource.title.children.match(isImg) ? (
                 <img src={dataSource.title.children} width="100%" alt="img" />
               ) : (
-                /* replace-start-value = dataSource.title.children */ React.createElement('span', {
+                /* replace-start-value = dataSource.title.children */
+                React.createElement('span', {
                   dangerouslySetInnerHTML: { __html: dataSource.title.children },
                 })
               )
               /* replace-end-value */
             }
           </div>
-          <div key="content" {...dataSource.content}>
+          <div
+            key="content"
+            className={dataSource.title.className}
+            content={dataSource.title.content}
+          >
             {
               /* replace-start-value = dataSource.content.children */
               React.createElement('span', {

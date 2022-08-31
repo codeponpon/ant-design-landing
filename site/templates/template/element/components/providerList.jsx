@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Col } from 'antd';
 import gameProviders from '../api/gameProviders';
 
-const ProviderList = () => {
+const ProviderList = (props) => {
+  const { block = 'content5' } = props;
   const [providers, setProviders] = useState([]);
   const [items, setItems] = useState([]);
 
@@ -29,7 +30,9 @@ const ProviderList = () => {
               {
                 /* replace-start-value = item.children.content.children */
                 React.createElement('span', {
-                  dangerouslySetInnerHTML: { __html: item.children.content.children },
+                  dangerouslySetInnerHTML: {
+                    __html: item.children.content.children,
+                  },
                 })
                 /* replace-end-value */
               }
@@ -43,11 +46,15 @@ const ProviderList = () => {
   const getBlock = (data) => ({
     name: data.name,
     className: 'block',
-    md: 3,
+    md: 4,
     xs: 24,
     children: {
       wrapper: {
-        className: 'content14-block-content',
+        className: `${block}-block-content`,
+        href:
+          !data.hasGame && data.launchAble
+            ? `/lobby/launchGame?name=${data.shortName}&type=${data.gameType}`
+            : `/lobby/provider?shortName=${data.shortName}`,
       },
       img: {
         children: data.img,
@@ -78,10 +85,12 @@ const ProviderList = () => {
           name: `block${item.id}`,
           img: item.image,
           content: item.name,
+          shortName: item.shortName,
+          launchAble: item.launchAble,
+          hasGame: item.hasGame,
+          gameType: item.type,
         });
       });
-
-      console.log('allProvider', allProvider);
       setItems(blocks);
     }
   }, []);

@@ -8,7 +8,7 @@ import './index.less';
 /* replace-end */
 import ProviderList from '../components/providerList';
 
-class Content5 extends React.PureComponent {
+class Content14 extends React.PureComponent {
   getChildrenToRender = (data) => {
     return data.map((item) => {
       return (
@@ -48,7 +48,6 @@ class Content5 extends React.PureComponent {
     const { dataSource } = props;
     delete props.dataSource;
     delete props.isMobile;
-    // const childrenToRender = this.getChildrenToRender(dataSource.block.children);
     return (
       <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
@@ -63,7 +62,7 @@ class Content5 extends React.PureComponent {
           </div>
           <div className={`content-template ${props.className}`}>
             <Row {...dataSource.block}>
-              <ProviderList />
+              <ProviderList block="content14" />
             </Row>
           </div>
         </div>
@@ -72,4 +71,4 @@ class Content5 extends React.PureComponent {
   }
 }
 
-export default Content5;
+export default Content14;

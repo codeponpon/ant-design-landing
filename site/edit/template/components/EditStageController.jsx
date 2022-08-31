@@ -58,14 +58,14 @@ class EditStateController extends React.Component {
   }
 
   componentDidMount() {
-    // 接收子级里传来的 dom 数据;
+    // Receive dom data from the child;
     // window.addEventListener('message', this.receiveDomData);
     window.receiveDomData = this.receiveDomData;
-    // 重置框
+    // reset box
     window.addEventListener('resize', () => {
       this.reRect();
     });
-    // 拖动
+    // drag
     let newId;
     this.side = document.querySelector('.edit-side-drawer .drawer-content .img-content-wrapper');
     this.stage = document.querySelector('.edit-stage .overlay');
@@ -131,9 +131,9 @@ class EditStateController extends React.Component {
         }
       })
       .on('shadow', (e) => {
-        // 挡掉上下拖动滚动跳动；
+        // Block up and down drag scrolling jumping;
         this.dom.scrollTop = this.scrollTop;
-        // 占位符
+        // Placeholder
         if (e.className.indexOf('img-wrapper') >= 0) {
           e.className = 'placeholder';
           const isThTH = utils.isThTH(this.props.location.pathname);
@@ -212,16 +212,16 @@ class EditStateController extends React.Component {
       const id = dom.getAttribute('id');
       const currentElemData = data[id];
       if (id) {
-        // 重置数据里的 rect，滚动条发生变化会随着变化。
+        // Reset the rect in the data, the scroll bar will change with the change.
         currentElemData.rect = currentElemData.item.getBoundingClientRect();
-        // 获取子级带 data-id 的 rect; 由于有动画组件，所以时时获取
+        // Get the rect with the data-id of the child; because of the animation component, get it from time to time
       }
       const rectArray = currentElemData
         ? getChildRect(currentElemData).concat(data.currentPopover)
         : data.currentPopover;
 
       if (this.currentData) {
-        // dom 在 queueAnim 删除后将不再是当前 dom; 当前从新获取；
+        // dom will no longer be the current dom after queueAnim is deleted; currently re-acquired;
         this.currentData = this.refreshCurrentData(rectArray) || this.currentData;
         currentSelectRect = this.currentData.item.getBoundingClientRect();
         this.currentData.rect = currentSelectRect;
@@ -310,7 +310,7 @@ class EditStateController extends React.Component {
   };
 
   editTextHandleBlur = (text) => {
-    // 修改 props 里的 dataSource 数据
+    // Modify the dataSource data in props
     this.setTemplateConfigData(text);
     setTimeout(() => {
       this.isInput = false;
@@ -387,9 +387,9 @@ class EditStateController extends React.Component {
             <div className="edit-text-wrapper">
               <Editor
                 onChange={this.editTextHandleChange}
-                onBlur={this.editTextHandleBlur} // 记录编辑 history
+                onBlur={this.editTextHandleBlur} // record edit history
                 text={editText}
-                textToString={editData.toText} // 有 toText 用 innerText
+                textToString={editData.toText} // There is toText with innerText
                 ref={(c) => {
                   const d = ReactDOM.findDOMNode(c);
                   if (!d) {
@@ -425,7 +425,7 @@ class EditStateController extends React.Component {
       {
         currentHoverRect: currentSelectRect,
         currentSelectRect,
-        editButton: editData && editData.split(','), // 文字与图片按钮配置
+        editButton: editData && editData.split(','), // Text and image button configuration
         openEditText: false,
       },
       () => {
@@ -619,7 +619,7 @@ class EditStateController extends React.Component {
   render() {
     const { className, mediaStateSelect } = this.props;
     const { data, currentHoverRect, currentSelectRect, iframe, openEditText } = this.state;
-    // 去除弹框的数据
+    // Remove popup data
     const dataArray = data ? Object.keys(data).filter((key) => key !== 'currentPopover') : [];
     const overlayChild = dataArray.map((key, i) => {
       const item = data[key];
@@ -632,7 +632,7 @@ class EditStateController extends React.Component {
           style={{
             width: '100%',
             height: itemStyle.height,
-            position: 'absolute', // 设置 margin 后定位失效，用 absolute
+            position: 'absolute', // The positioning is invalid after setting the margin, use absolute
             top: item.item.offsetTop,
             zIndex: itemStyle.zIndex,
           }}

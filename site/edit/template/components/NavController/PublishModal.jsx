@@ -185,7 +185,7 @@ class PublishModal extends React.Component {
               case 'ERROR':
                 message.error(
                   this.props.intl.formatMessage({
-                    id: 'pp.header.publish-cloud.error',
+                    id: 'app.header.publish-cloud.error',
                   }),
                 );
                 this.publishEnd();

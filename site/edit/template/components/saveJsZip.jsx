@@ -235,7 +235,7 @@ const jsToZip = (getJSON) => {
 }; */
 
 export function saveJsZip(templateData, callBack, getJSON) {
-  // 每次保存重置保存对象数据。。
+  // Each save resets the save object data.
   templateStrObj = {
     JS: {},
     LESS: {},

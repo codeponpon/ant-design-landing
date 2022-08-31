@@ -1,10 +1,14 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { Form, message, Space, Drawer, Input, Button } from 'antd';
-import { LockOutlined, MobileOutlined } from '@ant-design/icons';
+import { LockOutlined, MobileOutlined, LoadingOutlined, LoginOutlined } from '@ant-design/icons';
 import { Link } from 'rc-scroll-anim';
+import { setToken, setUserMe, checkTokenExpire } from '../libs/authToken';
 import RegisterComp from './registerComp';
-import waitTime from '../libs/waitTime';
+import signInUser from './signIn';
+
+const { location = {} } = typeof window ? window : {};
 
 const LoginComp = (props) => {
   const { isMobile, registerHistory = false, ...attrs } = props;
@@ -12,19 +16,41 @@ const LoginComp = (props) => {
   const [registerChildrenDrawer, setRegisterChildrenDrawer] = useState(false);
 
   const onFinish = async (values) => {
+    const { mobile, password } = values;
+
     setLoading(true);
-    waitTime(1500);
-    setLoading(false);
-    message.success('Sign-in Successful!');
+
+    try {
+      const res = await signInUser({
+        variables: {
+          data: {
+            username: mobile.replace(/\s/g, ''),
+            password: password.replace(/\s/g, ''),
+            typeAuth: 'userFront',
+          },
+        },
+      });
+
+      if (res.data.signInUser.__typename === 'SignInOutputSuccess') {
+        setUserMe(res.data.signInUser.user.username);
+        const chkExpire = checkTokenExpire(res.data.signInUser.token);
+        if (chkExpire) {
+          setToken(res.data.signInUser.token);
+          location?.reload();
+        }
+      } else {
+        message.warning(res.data.signInUser.messages);
+      }
+    } catch (e) {
+      message.error('เกิดข้อผิดพลาด! กรุณาทำรายใหม่อีกครั้ง');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Form initialValues={{ remember: true }} onFinish={onFinish}>
-      <div className="ant-pro-form-login-top" style={{ marginBottom: '20px' }}>
-        <div className="ant-pro-form-login-header">
-          <span className="ant-pro-form-login-title">เข้าสู่ระบบ</span>
-        </div>
-      </div>
+      <h1 style={{ marginBottom: '24px', textAlign: 'center' }}>เข้าสู่ระบบ</h1>
       <Form.Item
         name="mobile"
         rules={[
@@ -58,8 +84,15 @@ const LoginComp = (props) => {
         />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button" size="large" block>
-          เข้าสู่ระบบ
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="login-form-button"
+          size="large"
+          icon={<LoginOutlined />}
+          block
+        >
+          {loading ? <LoadingOutlined /> : 'เข้าสู่ระบบ'}
         </Button>{' '}
         {!registerHistory && (
           <Space style={{ marginTop: '20px' }}>

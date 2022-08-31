@@ -20,7 +20,7 @@ export default {
     },
     content: {
       className: 'banner0-content',
-      children: '一个高效的页面动画解决方案',
+      children: 'An efficient solution for page animation',
     },
     button: {
       className: 'banner0-button',

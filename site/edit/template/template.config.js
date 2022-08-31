@@ -8,12 +8,14 @@ export default {
         text: 'Nav(dark)',
         textEn: 'Nav(dark)',
         uid: 0,
+        disabled: true,
       },
       {
         src: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*luthRonCYuQAAAAAAAAAAABkARQnAQ',
         text: 'Nav(light)',
         textEn: 'Nav(light)',
         uid: 3,
+        disabled: true,
       },
       {
         src: 'https://zos.alipayobjects.com/rmsportal/ZjfIAdkDVlpnilf.jpg',
@@ -27,6 +29,12 @@ export default {
         textEn: 'User Nav',
         uid: 1,
         disabled: true,
+      },
+      {
+        src: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*luthRonCYuQAAAAAAAAAAABkARQnAQ',
+        text: 'Link Nav(light)',
+        textEn: 'Link Nav(light)',
+        uid: 4,
       },
     ],
   },
@@ -171,6 +179,7 @@ export default {
     ],
   },
   Contact: {
+    disabled: true,
     name: 'Contact',
     order: 3,
     data: [
@@ -243,6 +252,7 @@ export default {
     ],
   },
   Pricing: {
+    disabled: true,
     name: 'Pricing',
     order: 5,
     data: [
