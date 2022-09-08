@@ -248,7 +248,7 @@ export function saveJsZip(templateData, callBack, getJSON) {
   publishJSON = [
     {
       file: 'src/pages/index.js',
-      data: "import React from 'react';\nimport { ApolloProvider } from '@apollo/client';\nimport client from '../apollo';\nimport Home from '../components/index';\n\nexport default () => (<ApolloProvider client={client}><Home /></ApolloProvider>);",
+      data: "import React from 'react';\nimport { ApolloProvider } from '@apollo/client';\nimport client from '../apollo';\nimport Home from '../components/index';\nimport 'bootstrap/dist/css/bootstrap.min.css';\n\nexport default () => (<ApolloProvider client={client}><Home /></ApolloProvider>);",
     },
   ];
   const { data } = templateData;

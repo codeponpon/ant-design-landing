@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 /* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
